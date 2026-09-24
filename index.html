@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Film Maps</title>
+<meta name="description" content="Maps of a film collection, placed by where the films are set.">
+<style>
+  :root {
+    --bg: #fbfaf8;
+    --panel: #ffffff;
+    --ink: #1c1a17;
+    --muted: #6b645c;
+    --rule: #e4ded5;
+    --accent: #8a5a2b;
+    --shadow: 0 1px 2px rgba(28,26,23,.05), 0 8px 24px rgba(28,26,23,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #171614; --panel: #211f1c; --ink: #ece7e0; --muted: #a49c92;
+      --rule: #322e29; --accent: #d8a56b;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #171614; --panel: #211f1c; --ink: #ece7e0; --muted: #a49c92;
+    --rule: #322e29; --accent: #d8a56b;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 Georgia, "Iowan Old Style", "Times New Roman", serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 72px 16px 96px; }
+
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 28px; margin-bottom: 40px; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin: 0 0 .4em; letter-spacing: -.01em; }
+  .lede { color: var(--muted); margin: 0; max-width: 54ch; }
+
+  .cards { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .card {
+    display: block;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 26px 26px 22px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: var(--shadow);
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .card:hover, .card:focus-visible { transform: translateY(-2px); border-color: var(--accent); }
+  .card h2 { margin: 0 0 .35em; font-size: 1.3rem; }
+  .card p { margin: 0 0 1em; color: var(--muted); font-size: .95rem; }
+  .stat {
+    font: 500 .8rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--accent);
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  .note {
+    margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--rule);
+    color: var(--muted); font-size: .9rem; max-width: 62ch;
+  }
+  .note code { font-size: .85em; background: var(--panel); padding: .15em .4em; border-radius: 4px; border: 1px solid var(--rule); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Film Maps</h1>
+    <p class="lede">
+      A history film collection, placed on the map by where each film is <em>set</em> —
+      not where it was made, and not where its studio was. Hover or tap a country to see
+      what is there.
+    </p>
+  </header>
+
+  <div class="cards">
+
+    <a class="card" href="africa.html">
+      <h2>Africa on Film</h2>
+      <p>
+        From the source-of-the-Nile expeditions to Jadotville, Algiers and Mogadishu.
+        Countries with no films yet are shown grey, and films tagged Africa but
+        deliberately excluded are listed too, so an omission reads as a decision.
+      </p>
+      <span class="stat">170 films · 157 placements · 32 countries</span>
+    </a>
+
+    <a class="card" href="south-america.html">
+      <h2>South American Cinema</h2>
+      <p>
+        Every country, from the 1530s conquest to the present, filterable by theme —
+        dictatorship and the disappeared, Third Cinema, extraction, memory — and
+        splittable between films made by South Americans and films made by outsiders.
+      </p>
+      <span class="stat">Conquest to the present · by country, theme and era</span>
+    </a>
+
+  </div>
+
+  <p class="note">
+    Both maps need a network connection: they load D3 and their country geometry from a CDN
+    at page load. Each film title links out to Wikipedia or Wikidata where an identifier exists.
+    Built from a private catalogue; only these pages are public.
+  </p>
+
+</div>
+</body>
+</html>

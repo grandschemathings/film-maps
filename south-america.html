@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>South American Cinema Map - A Collection Across Country, Theme &amp; Era</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #3a1c71 0%, #b06ab3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+            max-width: 1400px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3a1c71 0%, #b06ab3 100%);
+            color: white;
+            padding: 28px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.4em;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 1.05em;
+            opacity: 0.92;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .theme-filters {
+            background: #f8f9fa;
+            padding: 18px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            justify-content: center;
+            border-bottom: 2px solid #e6e6e6;
+        }
+
+        .theme-btn {
+            padding: 8px 15px;
+            border: 2px solid transparent;
+            background: white;
+            color: #333;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 13.5px;
+            transition: all 0.25s ease;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 14px rgba(0,0,0,0.18);
+        }
+
+        .theme-btn.active {
+            color: white;
+        }
+
+        .main-content {
+            display: flex;
+            background: white;
+            min-height: 640px;
+        }
+
+        .map-container {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #fafafa;
+            position: relative;
+        }
+
+        .origin-filter {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: flex-start;
+            z-index: 2;
+        }
+
+        .origin-title {
+            font-size: 0.68em;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #999;
+            font-weight: 700;
+            margin-bottom: 1px;
+        }
+
+        .origin-btn {
+            padding: 6px 12px;
+            border: 2px solid #b06ab3;
+            background: white;
+            color: #b06ab3;
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 12.5px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .origin-btn:hover { box-shadow: 0 3px 8px rgba(0,0,0,0.14); }
+        .origin-btn.active { background: #b06ab3; color: white; }
+
+        .ot-link {
+            display: inline-block;
+            margin-left: 6px;
+            background: #c4302b;
+            color: white;
+            padding: 1px 7px;
+            border-radius: 8px;
+            font-size: 0.62em;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-decoration: none;
+            vertical-align: middle;
+            transition: background 0.2s ease;
+        }
+        .ot-link:hover { background: #9e211d; }
+
+        .rvw-link {
+            display: inline-block;
+            margin-left: 6px;
+            background: white;
+            color: #1565C0;
+            border: 1.5px solid #1565C0;
+            padding: 0 6px;
+            border-radius: 8px;
+            font-size: 0.62em;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-decoration: none;
+            vertical-align: middle;
+            transition: all 0.2s ease;
+        }
+        .rvw-link:hover { background: #1565C0; color: white; }
+        .rvw-link.rvw-seeded { background: #1565C0; color: white; }
+        .rvw-link.rvw-seeded:hover { background: #0d47a1; }
+
+        .origin-badge {
+            display: inline-block;
+            margin-left: 6px;
+            background: #ede7f6;
+            color: #5e35b1;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-size: 0.62em;
+            font-weight: 700;
+            vertical-align: middle;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .info-panel {
+            width: 430px;
+            padding: 28px 30px;
+            background: white;
+            border-left: 2px solid #e6e6e6;
+            overflow-y: auto;
+            max-height: 700px;
+        }
+
+        .info-panel h2 {
+            color: #2a2a2a;
+            margin-bottom: 6px;
+            font-size: 1.7em;
+        }
+
+        .panel-sub {
+            color: #777;
+            font-size: 0.9em;
+            margin-bottom: 16px;
+        }
+
+        .film-list {
+            margin-top: 16px;
+        }
+
+        .film-item {
+            background: #f8f9fa;
+            padding: 14px 15px;
+            margin-bottom: 13px;
+            border-radius: 10px;
+            border-left: 4px solid #b06ab3;
+            transition: all 0.25s ease;
+        }
+
+        .film-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .film-title {
+            font-weight: bold;
+            color: #2a2a2a;
+            font-size: 1.08em;
+            margin-bottom: 3px;
+        }
+
+        .film-meta {
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+        }
+
+        .film-era {
+            display: inline-block;
+            background: #efe6f5;
+            color: #6A1B9A;
+            padding: 2px 9px;
+            border-radius: 10px;
+            font-size: 0.78em;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .film-themes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 9px;
+        }
+
+        .theme-tag {
+            color: white;
+            padding: 3px 9px;
+            border-radius: 12px;
+            font-size: 0.72em;
+            font-weight: 600;
+        }
+
+        svg.map {
+            width: 100%;
+            height: auto;
+            max-width: 500px;
+        }
+
+        .country {
+            fill: #dcdce2;
+            stroke: white;
+            stroke-width: 2;
+            cursor: pointer;
+            transition: fill 0.25s ease;
+        }
+
+        .country:hover {
+            fill: #c9a3d8;
+        }
+
+        .country.active {
+            fill: #b06ab3;
+        }
+
+        .instructions {
+            text-align: center;
+            color: #777;
+            font-style: italic;
+            margin-bottom: 18px;
+        }
+
+        .country-label {
+            pointer-events: none;
+            font-size: 12px;
+            fill: #333;
+            text-anchor: middle;
+            font-weight: 600;
+        }
+
+        .sort-bar {
+            display: none;
+            margin: 6px 0 4px;
+        }
+
+        .sort-label {
+            font-size: 0.82em;
+            color: #888;
+            margin-right: 8px;
+        }
+
+        .sort-btn {
+            padding: 6px 13px;
+            margin-right: 7px;
+            border: 2px solid #b06ab3;
+            background: white;
+            color: #b06ab3;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12.5px;
+            transition: all 0.25s ease;
+        }
+
+        .sort-btn:hover, .sort-btn.active {
+            background: #b06ab3;
+            color: white;
+        }
+
+        .map-legend {
+            margin-top: 18px;
+            font-size: 0.8em;
+            color: #888;
+            text-align: center;
+            max-width: 460px;
+        }
+
+        .note-box {
+            background: #fff8e6;
+            border: 1px solid #f0d98a;
+            border-radius: 10px;
+            padding: 14px;
+            color: #6b5900;
+            font-size: 0.92em;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 South American Cinema — A Collection</h1>
+            <p>Every country, from the 1530s conquest to the present. 
+Click a country, filter by theme, or use "Made by" to split films by 
+South American filmmakers from those made by outsiders.</p>
+        </div>
+
+        <div class="theme-filters" id="theme-filters"><button class="theme-btn" data-theme="colonialism" style="border-color: rgb(139, 94, 60); color: rgb(139, 94, 60);">Conquest &amp; Colonialism</button><button class="theme-btn" data-theme="indigenous" style="border-color: rgb(46, 125, 50); color: rgb(46, 125, 50);">Indigenous &amp; Amazon</button><button class="theme-btn" data-theme="extraction" style="border-color: rgb(183, 121, 31); color: rgb(183, 121, 31);">Land, Water &amp; Extraction</button><button class="theme-btn" data-theme="afro" style="border-color: rgb(106, 27, 154); color: rgb(106, 27, 154);">Slavery &amp; Afro-Descendant</button><button class="theme-btn" data-theme="dictatorship" style="border-color: rgb(198, 40, 40); color: rgb(198, 40, 40);">Dictatorship &amp; the Disappeared</button><button class="theme-btn" data-theme="revolution" style="border-color: rgb(216, 67, 21); color: rgb(216, 67, 21);">Revolution &amp; Third Cinema</button><button class="theme-btn" data-theme="memory" style="border-color: rgb(0, 131, 143); color: rgb(0, 131, 143);">Memory &amp; Reckoning</button><button class="theme-btn" data-theme="urban" style="border-color: rgb(69, 90, 100); color: rgb(69, 90, 100);">City &amp; Marginality</button><button class="theme-btn" data-theme="narco" style="border-color: rgb(173, 20, 87); color: rgb(173, 20, 87);">Drug Trade</button><button class="theme-btn" data-theme="conflict" style="border-color: rgb(78, 93, 42); color: rgb(78, 93, 42);">Political Violence &amp; Armed Conflict</button><button class="theme-btn" data-theme="class" style="border-color: rgb(21, 101, 192); color: rgb(21, 101, 192);">Class, Race &amp; Family</button><button class="theme-btn" data-theme="family" style="border-color: rgb(236, 64, 122); color: rgb(236, 64, 122);">Family &amp; Popcorn</button><button class="theme-btn" data-theme="nazi" style="border-color: rgb(130, 119, 23); color: rgb(130, 119, 23);">Nazi Fugitives</button></div>
+
+        <div class="main-content">
+            <div class="map-container">
+                <div class="origin-filter" id="origin-filter">
+                    <span class="origin-title">Made by</span>
+                    <button class="origin-btn" data-origin="regional">South Americans</button>
+                    <button class="origin-btn" data-origin="foreign">Outsiders</button>
+                </div>
+                <svg class="map" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Venezuela -->
+                    <path class="country" id="venezuela" d="M 200 100 L 350 100 L 340 150 L 250 160 L 200 140 Z"></path>
+                    <text class="country-label" x="275" y="130">Venezuela</text>
+
+                    <!-- Colombia -->
+                    <path class="country" id="colombia" d="M 180 150 L 250 160 L 240 250 L 160 240 L 150 180 Z"></path>
+                    <text class="country-label" x="200" y="200">Colombia</text>
+
+                    <!-- Ecuador -->
+                    <path class="country" id="ecuador" d="M 140 250 L 180 250 L 180 300 L 140 300 Z"></path>
+                    <text class="country-label" x="160" y="275">Ecuador</text>
+
+                    <!-- Peru -->
+                    <path class="country" id="peru" d="M 140 300 L 180 300 L 200 400 L 150 420 L 120 350 Z"></path>
+                    <text class="country-label" x="160" y="360">Peru</text>
+
+                    <!-- Brazil -->
+                    <path class="country" id="brazil" d="M 240 250 L 450 200 L 480 350 L 450 500 L 350 550 L 250 500 L 200 400 Z"></path>
+                    <text class="country-label" x="350" y="380">Brazil</text>
+
+                    <!-- Bolivia -->
+                    <path class="country" id="bolivia" d="M 200 400 L 250 420 L 250 500 L 200 480 L 180 440 Z"></path>
+                    <text class="country-label" x="215" y="450">Bolivia</text>
+
+                    <!-- Paraguay -->
+                    <path class="country" id="paraguay" d="M 250 500 L 300 500 L 300 550 L 250 550 Z"></path>
+                    <text class="country-label" x="275" y="525">Paraguay</text>
+
+                    <!-- Chile -->
+                    <path class="country" id="chile" d="M 150 420 L 180 440 L 160 700 L 140 700 L 120 450 Z"></path>
+                    <text class="country-label" x="150" y="560">Chile</text>
+
+                    <!-- Argentina -->
+                    <path class="country active" id="argentina" d="M 180 440 L 250 480 L 300 550 L 280 700 L 160 700 Z"></path>
+                    <text class="country-label" x="230" y="600">Argentina</text>
+
+                    <!-- Uruguay -->
+                    <path class="country" id="uruguay" d="M 300 550 L 350 550 L 350 590 L 300 590 Z"></path>
+                    <text class="country-label" x="325" y="570">Uruguay</text>
+
+                    <!-- French Guiana -->
+                    <path class="country" id="french-guiana" d="M 350 100 L 400 100 L 390 140 L 340 150 Z"></path>
+                    <text class="country-label" x="370" y="120">Fr. Guiana</text>
+
+                    <!-- Suriname -->
+                    <path class="country" id="suriname" d="M 400 100 L 430 100 L 420 140 L 390 140 Z"></path>
+                    <text class="country-label" x="410" y="120">Suriname</text>
+
+                    <!-- Guyana -->
+                    <path class="country" id="guyana" d="M 430 100 L 460 100 L 450 140 L 420 140 Z"></path>
+                    <text class="country-label" x="440" y="120">Guyana</text>
+                </svg>
+                <div class="map-legend">
+                    12 sovereign countries + a note on French Guiana. 
+Highlighted countries have a film matching the current filters. Re-click
+ a theme or "Made by" button to clear it.
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <h2 id="country-name">Argentina</h2>
+                <p class="panel-sub" id="panel-sub">31 films</p>
+                <p class="instructions" id="instructions" style="display: none;">Click any country to explore its films, or pick a theme above.</p>
+                <div class="sort-bar" id="sort-buttons" style="display: block;">
+                    <span class="sort-label">Sort:</span>
+                    <button class="sort-btn active" onclick="sortFilms('era')">Era</button>
+                    <button class="sort-btn" onclick="sortFilms('year')">Release</button>
+                    <button class="sort-btn" onclick="sortFilms('title')">Title</button>
+                </div>
+                <div class="film-list" id="film-list">
+                <div class="film-item" style="border-left-color:#8B5E3C">
+                    <div class="film-title">
+                        Zama
+                        <a href="https://en.wikipedia.org/wiki/Zama_(film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Zama%202017%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Zama%202017%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2017 · <span class="film-era">Set: 1790s</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#8B5E3C">Conquest &amp; Colonialism</span><span class="theme-tag" style="background:#2E7D32">Indigenous &amp; Amazon</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#C62828">
+                    <div class="film-title">
+                        Camila
+                        <a href="https://en.wikipedia.org/wiki/Camila_(film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Camila%201984%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Camila%201984%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 1984 · <span class="film-era">Set: 1840s</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#C62828">Dictatorship &amp; the Disappeared</span><span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#8B5E3C">
+                    <div class="film-title">
+                        Jauja
+                        <a href="https://en.wikipedia.org/wiki/Jauja_(film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Jauja%202014%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Jauja%202014%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2014 · <span class="film-era">Set: 1880s (Conquest of the Desert)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#8B5E3C">Conquest &amp; Colonialism</span><span class="theme-tag" style="background:#2E7D32">Indigenous &amp; Amazon</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#D84315">
+                    <div class="film-title">
+                        La Patagonia Rebelde
+                        <a href="https://en.wikipedia.org/wiki/Rebellion_in_Patagonia" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=La%20Patagonia%20Rebelde%201974%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=La%20Patagonia%20Rebelde%201974%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 1974 · <span class="film-era">Set: 1920–21 (Patagonia strikes)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#D84315">Revolution &amp; Third Cinema</span><span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#4E5D2A">
+                    <div class="film-title">
+                        The Four Horsemen of the Apocalypse
+                        <a href="https://en.wikipedia.org/wiki/The_Four_Horsemen_of_the_Apocalypse_(1962_film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=The%20Four%20Horsemen%20of%20the%20Apocalypse%201962%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=The%20Four%20Horsemen%20of%20the%20Apocalypse%201962%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        <span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>
+                    </div>
+                    <div class="film-meta">Released 1962 · <span class="film-era">Set: WWII era</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#4E5D2A">Political Violence &amp; Armed Conflict</span><span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#1565C0">
+                    <div class="film-title">
+                        Eva Perón
+                        <a href="https://en.wikipedia.org/wiki/Eva_Per%C3%B3n:_The_True_Story" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Eva%20Per%C3%B3n%201996%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Eva%20Per%C3%B3n%201996%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 1996 · <span class="film-era">Set: 1940s–52 (Evita)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#1565C0">
+                    <div class="film-title">
+                        Evita
+                        <a href="https://en.wikipedia.org/wiki/Evita_(1996_film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Evita%201996%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Evita%201996%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        <span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>
+                    </div>
+                    <div class="film-meta">Released 1996 · <span class="film-era">Set: 1940s–52 (Evita)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#D84315">
+                    <div class="film-title">
+                        The Motorcycle Diaries
+                        <a href="https://en.wikipedia.org/wiki/The_Motorcycle_Diaries_(film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=The%20Motorcycle%20Diaries%202004%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=The%20Motorcycle%20Diaries%202004%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2004 · <span class="film-era">Set: 1952 (continental journey)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#D84315">Revolution &amp; Third Cinema</span><span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span><span class="theme-tag" style="background:#2E7D32">Indigenous &amp; Amazon</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#827717">
+                    <div class="film-title">
+                        Operation Finale
+                        <a href="https://en.wikipedia.org/wiki/Operation_Finale" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Operation%20Finale%202018%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Operation%20Finale%202018%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        <span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>
+                    </div>
+                    <div class="film-meta">Released 2018 · <span class="film-era">Set: 1960 (Eichmann capture)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#827717">Nazi Fugitives</span><span class="theme-tag" style="background:#00838F">Memory &amp; Reckoning</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#827717">
+                    <div class="film-title">
+                        The German Doctor
+                        <a href="https://en.wikipedia.org/wiki/The_German_Doctor" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=The%20German%20Doctor%202013%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=The%20German%20Doctor%202013%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2013 · <span class="film-era">Set: 1960 (Bariloche)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#827717">Nazi Fugitives</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#827717">
+                    <div class="film-title">
+                        The House on Garibaldi Street
+                        <a href="https://en.wikipedia.org/wiki/The_House_on_Garibaldi_Street" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=The%20House%20on%20Garibaldi%20Street%201979%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=The%20House%20on%20Garibaldi%20Street%201979%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        <span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>
+                    </div>
+                    <div class="film-meta">Released 1979 · <span class="film-era">Set: 1960 (Eichmann capture)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#827717">Nazi Fugitives</span><span class="theme-tag" style="background:#00838F">Memory &amp; Reckoning</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#827717">
+                    <div class="film-title">
+                        Operation Eichmann
+                        <a href="https://en.wikipedia.org/wiki/Operation_Eichmann_(film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Operation%20Eichmann%201961%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Operation%20Eichmann%201961%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        <span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>
+                    </div>
+                    <div class="film-meta">Released 1961 · <span class="film-era">Set: 1960 (Eichmann)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#827717">Nazi Fugitives</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#D84315">
+                    <div class="film-title">
+                        The Hour of the Furnaces
+                        <a href="https://en.wikipedia.org/wiki/The_Hour_of_the_Furnaces" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=The%20Hour%20of%20the%20Furnaces%201968%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=The%20Hour%20of%20the%20Furnaces%201968%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 1968 · <span class="film-era">Set: 1960s</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#D84315">Revolution &amp; Third Cinema</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#EC407A">
+                    <div class="film-title">
+                        Alive
+                        <a href="https://en.wikipedia.org/wiki/Alive_(1993_film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Alive%201993%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Alive%201993%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        <span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>
+                    </div>
+                    <div class="film-meta">Released 1993 · <span class="film-era">Set: 1972 (Andes crash)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#EC407A">Family &amp; Popcorn</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#C62828">
+                    <div class="film-title">
+                        The Secret in Their Eyes
+                        <a href="https://en.wikipedia.org/wiki/The_Secret_in_Their_Eyes" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=The%20Secret%20in%20Their%20Eyes%202009%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=The%20Secret%20in%20Their%20Eyes%202009%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2009 · <span class="film-era">Set: 1970s / 2000s</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#C62828">Dictatorship &amp; the Disappeared</span><span class="theme-tag" style="background:#00838F">Memory &amp; Reckoning</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#C62828">
+                    <div class="film-title">
+                        The Penguin Lessons
+                        <a href="https://en.wikipedia.org/wiki/The_Penguin_Lessons" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=The%20Penguin%20Lessons%202024%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color: rgb(196, 48, 43);" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=The%20Penguin%20Lessons%202024%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        <span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>
+                    </div>
+                    <div class="film-meta">Released 2024 · <span class="film-era">Set: 1976 (coup)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#C62828">Dictatorship &amp; the Disappeared</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#C62828">
+                    <div class="film-title">
+                        Azor
+                        <a href="https://en.wikipedia.org/wiki/Azor_(film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Azor%202021%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Azor%202021%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        <span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>
+                    </div>
+                    <div class="film-meta">Released 2021 · <span class="film-era">Set: 1980 (dictatorship)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#C62828">Dictatorship &amp; the Disappeared</span><span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#C62828">
+                    <div class="film-title">
+                        Kiss of the Spider Woman (2025)
+                        <a href="https://en.wikipedia.org/wiki/Kiss_of_the_Spider_Woman_(2025_film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Kiss%20of%20the%20Spider%20Woman%20(2025)%202025%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Kiss%20of%20the%20Spider%20Woman%20(2025)%202025%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        <span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>
+                    </div>
+                    <div class="film-meta">Released 2025 · <span class="film-era">Set: 1980s (dictatorship)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#C62828">Dictatorship &amp; the Disappeared</span><span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#4E5D2A">
+                    <div class="film-title">
+                        Blessed by Fire
+                        <a href="https://en.wikipedia.org/wiki/Blessed_by_Fire" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Blessed%20by%20Fire%202005%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Blessed%20by%20Fire%202005%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2005 · <span class="film-era">Set: 1982 (Falklands War)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#4E5D2A">Political Violence &amp; Armed Conflict</span><span class="theme-tag" style="background:#00838F">Memory &amp; Reckoning</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#C62828">
+                    <div class="film-title">
+                        The Clan
+                        <a href="https://en.wikipedia.org/wiki/The_Clan_(2015_film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=The%20Clan%202015%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=The%20Clan%202015%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2015 · <span class="film-era">Set: 1982–85 (Puccio case)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#C62828">Dictatorship &amp; the Disappeared</span><span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#C62828">
+                    <div class="film-title">
+                        The Official Story
+                        <a href="https://en.wikipedia.org/wiki/The_Official_Story" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=The%20Official%20Story%201985%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=The%20Official%20Story%201985%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 1985 · <span class="film-era">Set: 1976–83</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#C62828">Dictatorship &amp; the Disappeared</span><span class="theme-tag" style="background:#00838F">Memory &amp; Reckoning</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#C62828">
+                    <div class="film-title">
+                        Argentina, 1985
+                        <a href="https://en.wikipedia.org/wiki/Argentina,_1985" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Argentina%2C%201985%202022%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Argentina%2C%201985%202022%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2022 · <span class="film-era">Set: 1985</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#C62828">Dictatorship &amp; the Disappeared</span><span class="theme-tag" style="background:#00838F">Memory &amp; Reckoning</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#1565C0">
+                    <div class="film-title">
+                        Man Facing Southeast
+                        <a href="https://en.wikipedia.org/wiki/Man_Facing_Southeast" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Man%20Facing%20Southeast%201987%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color: rgb(196, 48, 43);" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Man%20Facing%20Southeast%201987%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 1987 · <span class="film-era">Set: Contemporary</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#1565C0">
+                    <div class="film-title">
+                        La Ciénaga
+                        <a href="https://en.wikipedia.org/wiki/La_Ci%C3%A9naga_(film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=La%20Ci%C3%A9naga%202001%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        <a class="ot-link" href="https://www.youtube.com/watch?v=QGSq1uldLSQ" target="_blank" title="Official trailer (verified)">OT</a>
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=La%20Ci%C3%A9naga%202001%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2001 · <span class="film-era">Set: Contemporary</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#455A64">
+                    <div class="film-title">
+                        Nine Queens
+                        <a href="https://en.wikipedia.org/wiki/Nine_Queens" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Nine%20Queens%202000%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Nine%20Queens%202000%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2000 · <span class="film-era">Set: Contemporary</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#455A64">City &amp; Marginality</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#1565C0">
+                    <div class="film-title">
+                        Intimate Stories
+                        <a href="https://en.wikipedia.org/wiki/Intimate_Stories" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Intimate%20Stories%202002%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Intimate%20Stories%202002%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2002 · <span class="film-era">Set: Contemporary</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#1565C0">
+                    <div class="film-title">
+                        XXY
+                        <a href="https://en.wikipedia.org/wiki/XXY_(film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=XXY%202007%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=XXY%202007%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2007 · <span class="film-era">Set: Contemporary</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#EC407A">
+                    <div class="film-title">
+                        Dinosaurs: Giants of Patagonia
+                        <a href="https://en.wikipedia.org/wiki/Dinosaurs:_Giants_of_Patagonia" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Dinosaurs%3A%20Giants%20of%20Patagonia%202007%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Dinosaurs%3A%20Giants%20of%20Patagonia%202007%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        <span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>
+                    </div>
+                    <div class="film-meta">Released 2007 · <span class="film-era">Set: Prehistoric (documentary)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#EC407A">Family &amp; Popcorn</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#EC407A">
+                    <div class="film-title">
+                        Underdogs
+                        <a href="https://en.wikipedia.org/wiki/Metegol" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Underdogs%202013%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Underdogs%202013%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2013 · <span class="film-era">Set: Contemporary (animated)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#EC407A">Family &amp; Popcorn</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#455A64">
+                    <div class="film-title">
+                        Wild Tales
+                        <a href="https://en.wikipedia.org/wiki/Wild_Tales_(film)" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Wild%20Tales%202014%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Wild%20Tales%202014%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2014 · <span class="film-era">Set: Contemporary</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#455A64">City &amp; Marginality</span><span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div>
+                <div class="film-item" style="border-left-color:#1565C0">
+                    <div class="film-title">
+                        Chronicles of a Wandering Saint
+                        <a href="https://en.wikipedia.org/wiki/Chronicles_of_a_Wandering_Saint" target="_blank" style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Chronicles%20of%20a%20Wandering%20Saint%202023%20trailer" target="_blank" style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        
+                        <a class="rvw-link" href="https://www.youtube.com/results?search_query=Chronicles%20of%20a%20Wandering%20Saint%202023%20review" target="_blank" title="Search reviews on YouTube">RVW</a>
+                        
+                    </div>
+                    <div class="film-meta">Released 2023 · <span class="film-era">Set: Contemporary (rural village)</span></div>
+                    <div class="film-themes">
+                        <span class="theme-tag" style="background:#1565C0">Class, Race &amp; Family</span>
+                    </div>
+                </div></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ---- Themes (the new nine-theme framework) ----
+        const themeInfo = {
+            'colonialism': { label: 'Conquest & Colonialism', color: '#8B5E3C' },
+            'indigenous':  { label: 'Indigenous & Amazon',    color: '#2E7D32' },
+            'extraction':  { label: 'Land, Water & Extraction', color: '#B7791F' },
+            'afro':        { label: 'Slavery & Afro-Descendant', color: '#6A1B9A' },
+            'dictatorship':{ label: 'Dictatorship & the Disappeared', color: '#C62828' },
+            'revolution':  { label: 'Revolution & Third Cinema', color: '#D84315' },
+            'memory':      { label: 'Memory & Reckoning',     color: '#00838F' },
+            'urban':       { label: 'City & Marginality',     color: '#455A64' },
+            'narco':       { label: 'Drug Trade',             color: '#AD1457' },
+            'conflict':    { label: 'Political Violence & Armed Conflict', color: '#4E5D2A' },
+            'class':       { label: 'Class, Race & Family',   color: '#1565C0' },
+            'family':      { label: 'Family & Popcorn',       color: '#EC407A' },
+            'nazi':        { label: 'Nazi Fugitives',         color: '#827717' }
+        };
+
+        // ---- Film database (curated set: country / theme / era) ----
+        // eraStart = approx year the story is SET (for chronological sorting)
+        const filmDatabase = {
+            argentina: { name: "Argentina", films: [
+                { title: "Zama", year: 2017, era: "1790s", eraStart: 1790, themes: ["colonialism", "indigenous"] },
+                { title: "Wild Tales", year: 2014, era: "Contemporary", eraStart: 2014, themes: ["urban", "class"] },
+                { title: "Man Facing Southeast", year: 1987, era: "Contemporary", eraStart: 1987, themes: ["class"] },
+                { title: "Jauja", year: 2014, era: "1880s (Conquest of the Desert)", eraStart: 1882, themes: ["colonialism", "indigenous"] },
+                { title: "Intimate Stories", year: 2002, era: "Contemporary", eraStart: 2002, themes: ["class"] },
+                { title: "Blessed by Fire", year: 2005, era: "1982 (Falklands War)", eraStart: 1982, themes: ["conflict", "memory"] },
+                { title: "Operation Finale", year: 2018, era: "1960 (Eichmann capture)", eraStart: 1960, themes: ["nazi", "memory"] },
+                { title: "The German Doctor", year: 2013, era: "1960 (Bariloche)", eraStart: 1960, themes: ["nazi"] },
+                { title: "The House on Garibaldi Street", year: 1979, era: "1960 (Eichmann capture)", eraStart: 1960, themes: ["nazi", "memory"] },
+                { title: "Operation Eichmann", year: 1961, era: "1960 (Eichmann)", eraStart: 1960, themes: ["nazi"] },
+                { title: "The Four Horsemen of the Apocalypse", year: 1962, era: "WWII era", eraStart: 1939, themes: ["conflict", "class"] },
+                { title: "XXY", year: 2007, era: "Contemporary", eraStart: 2007, themes: ["class"] },
+                { title: "Underdogs", year: 2013, era: "Contemporary (animated)", eraStart: 2013, themes: ["family"] },
+                { title: "Alive", year: 1993, era: "1972 (Andes crash)", eraStart: 1972, themes: ["family"] },
+                { title: "Dinosaurs: Giants of Patagonia", year: 2007, era: "Prehistoric (documentary)", eraStart: 2007, themes: ["family"] },
+                { title: "Kiss of the Spider Woman (2025)", year: 2025, era: "1980s (dictatorship)", eraStart: 1981, themes: ["dictatorship", "class"] },
+                { title: "Camila", year: 1984, era: "1840s", eraStart: 1847, themes: ["dictatorship", "class"] },
+                { title: "La Patagonia Rebelde", year: 1974, era: "1920–21 (Patagonia strikes)", eraStart: 1921, themes: ["revolution", "class"] },
+                { title: "The Motorcycle Diaries", year: 2004, era: "1952 (continental journey)", eraStart: 1952, themes: ["revolution", "class", "indigenous"] },
+                { title: "Eva Perón", year: 1996, era: "1940s–52 (Evita)", eraStart: 1945, themes: ["class"] },
+                { title: "Evita", year: 1996, era: "1940s–52 (Evita)", eraStart: 1945, themes: ["class"] },
+                { title: "Azor", year: 2021, era: "1980 (dictatorship)", eraStart: 1980, themes: ["dictatorship", "class"] },
+                { title: "The Hour of the Furnaces", year: 1968, era: "1960s", eraStart: 1968, themes: ["revolution"] },
+                { title: "The Penguin Lessons", year: 2024, era: "1976 (coup)", eraStart: 1976, themes: ["dictatorship"] },
+                { title: "The Official Story", year: 1985, era: "1976–83", eraStart: 1983, themes: ["dictatorship", "memory"] },
+                { title: "The Clan", year: 2015, era: "1982–85 (Puccio case)", eraStart: 1982, themes: ["dictatorship", "class"] },
+                { title: "The Secret in Their Eyes", year: 2009, era: "1970s / 2000s", eraStart: 1974, themes: ["dictatorship", "memory"] },
+                { title: "La Ciénaga", year: 2001, era: "Contemporary", eraStart: 2000, themes: ["class"], trailer: "QGSq1uldLSQ" },
+                { title: "Nine Queens", year: 2000, era: "Contemporary", eraStart: 2000, themes: ["urban"] },
+                { title: "Chronicles of a Wandering Saint", year: 2023, era: "Contemporary (rural village)", eraStart: 2023, themes: ["class"] },
+                { title: "Argentina, 1985", year: 2022, era: "1985", eraStart: 1985, themes: ["dictatorship", "memory"] }
+            ]},
+            brazil: { name: "Brazil", films: [
+                { title: "How Tasty Was My Little Frenchman", year: 1971, era: "1550s", eraStart: 1557, themes: ["colonialism", "indigenous"] },
+                { title: "Kiss of the Spider Woman (1985)", year: 1985, era: "1970s (dictatorship)", eraStart: 1975, themes: ["dictatorship", "class"] },
+                { title: "Burn!", year: 1969, era: "1840s (colonial slavery)", eraStart: 1845, themes: ["colonialism", "afro"] },
+                { title: "That Man from Rio", year: 1964, era: "1960s", eraStart: 1964, themes: ["family"] },
+                { title: "A Handful of Dust", year: 1988, era: "1930s", eraStart: 1934, themes: ["colonialism", "class"] },
+                { title: "Carlota Joaquina", year: 1995, era: "1808–21 (Portuguese court in Rio)", eraStart: 1808, themes: ["colonialism", "class"] },
+                { title: "Xica da Silva", year: 1976, era: "18th c. (Diamantina diamond district)", eraStart: 1760, themes: ["afro", "extraction", "class"] },
+                { title: "The Lost City of Z", year: 2016, era: "1900s–1920s (Fawcett)", eraStart: 1906, themes: ["colonialism", "indigenous"] },
+                { title: "The Age of the Earth", year: 1980, era: "Contemporary (allegory)", eraStart: 1980, themes: ["revolution"] },
+                { title: "Aquarius", year: 2016, era: "Contemporary", eraStart: 2016, themes: ["class", "urban"] },
+                { title: "Neon Bull", year: 2016, era: "Contemporary", eraStart: 2016, themes: ["class"] },
+                { title: "The Second Mother", year: 2015, era: "Contemporary", eraStart: 2015, themes: ["class"] },
+                { title: "The Way He Looks", year: 2014, era: "Contemporary", eraStart: 2014, themes: ["class"] },
+                { title: "Amazon Forever", year: 2004, era: "Contemporary (documentary)", eraStart: 2004, themes: ["extraction", "indigenous"] },
+                { title: "Anaconda", year: 1997, era: "Contemporary (Amazon)", eraStart: 1997, themes: ["family"] },
+                { title: "Jungle Cruise", year: 2021, era: "1916 (Amazon)", eraStart: 1916, themes: ["family"] },
+                { title: "Rio", year: 2011, era: "Contemporary", eraStart: 2011, themes: ["family"] },
+                { title: "Rio 2", year: 2014, era: "Contemporary", eraStart: 2014, themes: ["family"] },
+                { title: "Fast Five", year: 2011, era: "Contemporary (Rio heist)", eraStart: 2011, themes: ["family"] },
+                { title: "The Emerald Forest", year: 1985, era: "Contemporary (Amazon dam)", eraStart: 1985, themes: ["indigenous", "extraction", "family"] },
+                { title: "The Rundown", year: 2003, era: "Contemporary (Amazon)", eraStart: 2003, themes: ["family"] },
+                { title: "The Boys from Brazil", year: 1978, era: "1970s (Mengele; base in Paraguay)", eraStart: 1974, themes: ["nazi"] },
+                { title: "Notorious", year: 1946, era: "1946 (post-war Rio)", eraStart: 1946, themes: ["nazi"] },
+                { title: "Hans Staden", year: 1999, era: "1550s", eraStart: 1552, themes: ["colonialism", "indigenous"] },
+                { title: "Death in the Garden", year: 1956, era: "1950s · country unnamed (diamond-mining jungle)", eraStart: 1955, themes: ["extraction", "conflict"] },
+                { title: "At Play in the Fields of the Lord", year: 1991, era: "Amazon frontier", eraStart: 1965, themes: ["indigenous", "colonialism"] },
+                { title: "Xingu", year: 2012, era: "1940s–60s (Villas-Bôas / Xingu Park)", eraStart: 1943, themes: ["indigenous", "colonialism"] },
+                { title: "The Year My Parents Went on Vacation", year: 2006, era: "1970 (World Cup / dictatorship)", eraStart: 1970, themes: ["dictatorship"] },
+                { title: "Bacurau", year: 2019, era: "Near-future / contemporary", eraStart: 2020, themes: ["class", "extraction", "conflict"] },
+                { title: "Estômago: A Gastronomic Story", year: 2007, era: "Contemporary", eraStart: 2007, themes: ["class", "urban"] },
+                { title: "The Salt of the Earth", year: 2014, era: "1980s–2010s", eraStart: 1986, themes: ["extraction", "indigenous"] },
+                { title: "Medicine Man", year: 1992, era: "Contemporary", eraStart: 1992, themes: ["indigenous", "extraction"] },
+                { title: "Black Orpheus", year: 1959, era: "1950s", eraStart: 1958, themes: ["afro", "urban"] },
+                { title: "Barren Lives", year: 1963, era: "1940s", eraStart: 1940, themes: ["revolution", "class"] },
+                { title: "Black God, White Devil", year: 1964, era: "Early 20th c.", eraStart: 1940, themes: ["revolution", "class"], trailer: "06lr4b9vA60" },
+                { title: "Kuarup", year: 1989, era: "1950s–70s", eraStart: 1954, themes: ["indigenous", "dictatorship"] },
+                { title: "Pixote", year: 1981, era: "1980s", eraStart: 1980, themes: ["urban"] },
+                { title: "Central Station", year: 1998, era: "1990s", eraStart: 1998, themes: ["class"], review: "cF6W4m529MA" },
+                { title: "City of God", year: 2002, era: "1960s–80s", eraStart: 1975, themes: ["urban", "narco"], review: "GGaiadfE7Z0" },
+                { title: "Carandiru", year: 2003, era: "1980s–92 (prison massacre)", eraStart: 1990, themes: ["urban", "class"] },
+                { title: "Elite Squad", year: 2007, era: "1990s–2000s", eraStart: 1997, themes: ["urban", "narco"], review: "Or9z4aXdwEM" },
+                { title: "Elite Squad: The Enemy Within", year: 2010, era: "Contemporary (militias & politics)", eraStart: 2010, themes: ["urban", "narco", "class", "conflict"], review: "ZRjnVqh6NVo" },
+                { title: "A Dog's Will", year: 2000, era: "Sertão, early/mid 20th c.", eraStart: 1940, themes: ["class"], review: "_BCjFoSCZnw" },
+                { title: "I'm Still Here", year: 2024, era: "1970s", eraStart: 1971, themes: ["dictatorship", "memory"], review: "eJhXMH8Tzso" },
+                { title: "The Secret Agent", year: 2025, era: "1977 (Recife)", eraStart: 1977, themes: ["dictatorship", "urban"], review: "NueUU2GrLFg" }
+            ]},
+            chile: { name: "Chile", films: [
+                { title: "The Jackal of Nahueltoro", year: 1969, era: "1960s", eraStart: 1960, themes: ["revolution", "class"] },
+                { title: "The Settlers", year: 2023, era: "1901 (Tierra del Fuego)", eraStart: 1901, themes: ["colonialism", "indigenous", "conflict"] },
+                { title: "Neruda", year: 2016, era: "1948 (persecution of Neruda)", eraStart: 1948, themes: ["revolution", "memory"] },
+                { title: "Chile, Obstinate Memory", year: 1997, era: "1973 & after", eraStart: 1973, themes: ["dictatorship", "memory"] },
+                { title: "Gloria", year: 2013, era: "Contemporary", eraStart: 2013, themes: ["class"] },
+                { title: "The Club", year: 2015, era: "Contemporary", eraStart: 2015, themes: ["memory", "class"] },
+                { title: "The Wolf House", year: 2018, era: "Colonia Dignidad allegory", eraStart: 1970, themes: ["dictatorship"] },
+                { title: "The Dance of Reality", year: 2013, era: "1930s (Jodorowsky's childhood)", eraStart: 1935, themes: ["class", "memory"] },
+                { title: "Endless Poetry", year: 2016, era: "1940s–50s", eraStart: 1947, themes: ["class", "memory"] },
+                { title: "Elcano & Magellan", year: 2019, era: "1519–22 (Strait of Magellan)", eraStart: 1519, themes: ["family"] },
+                { title: "The Battle of Chile", year: 1979, era: "1970–73", eraStart: 1973, themes: ["revolution", "dictatorship"] },
+                { title: "Death and the Maiden", year: 1994, era: "Post-dictatorship (early 1990s)", eraStart: 1991, themes: ["dictatorship", "memory"] },
+                { title: "The Pearl Button", year: 2015, era: "Contemporary", eraStart: 2015, themes: ["extraction", "indigenous", "memory"] },
+                { title: "Caliche sangriento", year: 1969, era: "1879–84 (War of the Pacific)", eraStart: 1879, themes: ["conflict", "extraction"] },
+                { title: "Sayen", year: 2023, era: "Contemporary", eraStart: 2023, themes: ["extraction", "indigenous"] },
+                { title: "Sayen: Desert Road", year: 2023, era: "Contemporary", eraStart: 2023, themes: ["extraction", "indigenous"] },
+                { title: "Sayen: The Huntress", year: 2024, era: "Contemporary", eraStart: 2024, themes: ["extraction", "indigenous"] },
+                { title: "Missing", year: 1982, era: "1973 (coup)", eraStart: 1973, themes: ["dictatorship", "memory"] },
+                { title: "Machuca", year: 2004, era: "1973", eraStart: 1973, themes: ["dictatorship", "class"] },
+                { title: "Chile '76", year: 2022, era: "1976 (dictatorship)", eraStart: 1976, themes: ["dictatorship", "class"] },
+                { title: "The House of the Spirits", year: 1993, era: "1920s–73 (family saga → coup)", eraStart: 1926, themes: ["dictatorship", "class"] },
+                { title: "No", year: 2012, era: "1988", eraStart: 1988, themes: ["dictatorship", "memory"] },
+                { title: "Nostalgia for the Light", year: 2010, era: "Contemporary", eraStart: 2010, themes: ["memory", "dictatorship"] },
+                { title: "A Fantastic Woman", year: 2017, era: "Contemporary", eraStart: 2017, themes: ["class"] }
+            ]},
+            peru: { name: "Peru", films: [
+                { title: "Aguirre, the Wrath of God", year: 1972, era: "1560s", eraStart: 1560, themes: ["colonialism", "indigenous", "extraction"] },
+                { title: "Magallanes", year: 2015, era: "Post-conflict", eraStart: 2010, themes: ["conflict", "memory"] },
+                { title: "Wiñaypacha", year: 2017, era: "Contemporary (Aymara Andes)", eraStart: 2017, themes: ["indigenous"] },
+                { title: "Days of Santiago", year: 2004, era: "Contemporary", eraStart: 2004, themes: ["urban", "class"] },
+                { title: "Paper Dove", year: 2003, era: "1980s–90s (Shining Path)", eraStart: 1990, themes: ["conflict"] },
+                { title: "Touching the Void", year: 2003, era: "1985 (Siula Grande)", eraStart: 1985, themes: ["family"] },
+                { title: "Dora and the Lost City of Gold", year: 2019, era: "Contemporary", eraStart: 2019, themes: ["family"] },
+                { title: "Paddington", year: 2014, era: "Contemporary", eraStart: 2014, themes: ["family"] },
+                { title: "Paddington 2", year: 2017, era: "Contemporary", eraStart: 2017, themes: ["family"] },
+                { title: "Paddington in Peru", year: 2024, era: "Contemporary", eraStart: 2024, themes: ["family"] },
+                { title: "The Emperor's New Groove", year: 2000, era: "Inca era", eraStart: 1500, themes: ["family"] },
+                { title: "Yes Day", year: 2021, era: "Contemporary", eraStart: 2021, themes: ["family"] },
+                { title: "The Green Inferno", year: 2013, era: "Contemporary (Amazon)", eraStart: 2013, themes: ["family"] },
+                { title: "Fitzcarraldo", year: 1982, era: "c. 1900 (rubber boom)", eraStart: 1900, themes: ["colonialism", "indigenous", "extraction"] },
+                { title: "The Royal Hunt of the Sun", year: 1969, era: "1532 (conquest of the Inca)", eraStart: 1532, themes: ["colonialism", "indigenous"] },
+                { title: "The Bridge of San Luis Rey", year: 2004, era: "1714 (colonial Lima)", eraStart: 1714, themes: ["colonialism", "class"] },
+                { title: "Kukuli", year: 1961, era: "Timeless / folk", eraStart: 1961, themes: ["indigenous"] },
+                { title: "The Green Wall", year: 1970, era: "1970s", eraStart: 1970, themes: ["class"] },
+                { title: "Madeinusa", year: 2006, era: "Contemporary", eraStart: 2006, themes: ["indigenous", "class"] },
+                { title: "The Dancer Upstairs", year: 2002, era: "1980s–90s (Shining Path) · country unnamed, Peru as stand-in", eraStart: 1990, themes: ["conflict", "urban"] },
+                { title: "The Milk of Sorrow", year: 2009, era: "Post-conflict", eraStart: 2008, themes: ["indigenous", "memory", "conflict"] }
+            ]},
+            colombia: { name: "Colombia", films: [
+                { title: "Embrace of the Serpent", year: 2015, era: "1900s & 1940s", eraStart: 1909, themes: ["colonialism", "indigenous", "extraction"] },
+                { title: "Maria Full of Grace", year: 2004, era: "Contemporary", eraStart: 2004, themes: ["narco", "class"] },
+                { title: "The Wind Journeys", year: 2009, era: "Mid-20th c.", eraStart: 1960, themes: ["class"] },
+                { title: "Of Love and Other Demons", year: 2009, era: "18th c. (colonial Cartagena)", eraStart: 1750, themes: ["colonialism", "class"] },
+                { title: "Encanto", year: 2021, era: "Early–mid 20th c.", eraStart: 1950, themes: ["family"] },
+                { title: "The Road to El Dorado", year: 2000, era: "1519 (El Dorado legend)", eraStart: 1519, themes: ["family"] },
+                { title: "Romancing the Stone", year: 1984, era: "Contemporary", eraStart: 1984, themes: ["family"] },
+                { title: "The Adventurers", year: 1970, era: "1960s (fictional country)", eraStart: 1960, themes: ["family"] },
+                { title: "Cóndores no entierran todos los días", year: 1984, era: "1950s (La Violencia)", eraStart: 1950, themes: ["conflict", "class"] },
+                { title: "Birds of Passage", year: 2018, era: "1960s–80s", eraStart: 1968, themes: ["indigenous", "narco"] },
+                { title: "Rodrigo D: No Future", year: 1990, era: "1980s", eraStart: 1988, themes: ["urban", "narco"] },
+                { title: "The Rose Seller", year: 1998, era: "1990s", eraStart: 1998, themes: ["urban"] },
+                { title: "Monos", year: 2019, era: "Contemporary", eraStart: 2018, themes: ["conflict"] },
+                { title: "The Colors of the Mountain", year: 2011, era: "Contemporary (armed conflict)", eraStart: 2010, themes: ["conflict", "class"] },
+                { title: "Proof of Life", year: 2000, era: "Contemporary · country fictional (Colombia-inspired)", eraStart: 2000, themes: ["conflict", "narco"] },
+                { title: "Clear and Present Danger", year: 1994, era: "Contemporary (cartel war)", eraStart: 1994, themes: ["narco", "conflict", "family"] },
+                { title: "Blow", year: 2001, era: "1970s–80s (cocaine trade)", eraStart: 1975, themes: ["narco", "family"] },
+                { title: "American Made", year: 2017, era: "1980s (Medellín cartel)", eraStart: 1980, themes: ["narco", "family"] },
+                { title: "Loving Pablo", year: 2017, era: "1980s–90s (Escobar)", eraStart: 1983, themes: ["narco", "family"] },
+                { title: "Colombiana", year: 2011, era: "Contemporary", eraStart: 2011, themes: ["narco", "family"] },
+                { title: "Collateral Damage", year: 2002, era: "Contemporary (FARC)", eraStart: 2002, themes: ["conflict", "narco", "family"] },
+                { title: "Memoria", year: 2021, era: "Contemporary", eraStart: 2021, themes: ["memory"] }
+            ]},
+            venezuela: { name: "Venezuela", films: [
+                { title: "The Liberator", year: 2013, era: "1800s (Bolívar)", eraStart: 1810, themes: ["colonialism"] },
+                { title: "From Afar", year: 2015, era: "Contemporary", eraStart: 2015, themes: ["urban", "class"] },
+                { title: "Up", year: 2009, era: "Contemporary", eraStart: 2009, themes: ["family"] },
+                { title: "The Wages of Fear", year: 1953, era: "1950s · remade as Sorcerer (1977) · country unnamed, Venezuela as stand-in", eraStart: 1953, themes: ["extraction", "class"], trailer: "ZYDZ3vNa-MQ" },
+                { title: "Postcards from Leningrad", year: 2007, era: "1960s–70s (guerrilla years)", eraStart: 1966, themes: ["revolution", "conflict"] },
+                { title: "Secuestro Express", year: 2005, era: "2000s", eraStart: 2005, themes: ["urban", "narco"] },
+                { title: "Bad Hair", year: 2013, era: "Contemporary", eraStart: 2013, themes: ["class", "afro"] }
+            ]},
+            bolivia: { name: "Bolivia", films: [
+                { title: "Even the Rain", year: 2010, era: "2000 (Cochabamba) / 1500s framing", eraStart: 2000, themes: ["extraction", "colonialism", "indigenous"] },
+                { title: "The Most Beautiful of My Very Best Years", year: 2005, era: "Contemporary", eraStart: 2005, themes: ["urban", "class"] },
+                { title: "The Devil's Miner", year: 2005, era: "Contemporary (Potosí)", eraStart: 2005, themes: ["extraction", "class"] },
+                { title: "Quantum of Solace", year: 2008, era: "Contemporary", eraStart: 2008, themes: ["extraction"] },
+                { title: "Butch Cassidy and the Sundance Kid", year: 1969, era: "1900s (fleeing to Bolivia)", eraStart: 1908, themes: ["family"] },
+                { title: "Blackthorn", year: 2011, era: "1920s (elderly Butch in Bolivia)", eraStart: 1927, themes: ["family"] },
+                { title: "Our Brand Is Crisis", year: 2015, era: "2002 (election)", eraStart: 2002, themes: ["class"] },
+                { title: "Blood of the Condor", year: 1969, era: "1960s", eraStart: 1969, themes: ["indigenous", "revolution"] },
+                { title: "The Courage of the People", year: 1971, era: "1967", eraStart: 1967, themes: ["revolution"] },
+                { title: "Utama", year: 2022, era: "Contemporary", eraStart: 2022, themes: ["indigenous"] }
+            ]},
+            uruguay: { name: "Uruguay", films: [
+                { title: "State of Siege", year: 1972, era: "1970 (Tupamaros / Mitrione)", eraStart: 1970, themes: ["revolution", "conflict"] },
+                { title: "Society of the Snow", year: 2023, era: "1972 (Andes crash)", eraStart: 1972, themes: ["memory"] },
+                { title: "A Twelve-Year Night", year: 2018, era: "1973–85", eraStart: 1973, themes: ["dictatorship", "memory"] },
+                { title: "The Pope's Toilet", year: 2007, era: "1980s", eraStart: 1988, themes: ["class"] },
+                { title: "Whisky", year: 2004, era: "Contemporary", eraStart: 2004, themes: ["class"] }
+            ]},
+            paraguay: { name: "Paraguay", films: [
+                { title: "The Mission", year: 1986, era: "1750s (Jesuit reductions)", eraStart: 1750, themes: ["colonialism", "indigenous"] },
+                { title: "Guarani", year: 2016, era: "Contemporary", eraStart: 2016, themes: ["class", "indigenous"] },
+                { title: "Triple Frontier", year: 2019, era: "Contemporary · fictional tri-border", eraStart: 2019, themes: ["narco", "conflict", "family"] },
+                { title: "Miami Vice", year: 2006, era: "Contemporary (Ciudad del Este)", eraStart: 2006, themes: ["narco", "family"] },
+                { title: "Paraguayan Hammock", year: 2006, era: "1930s (Chaco War)", eraStart: 1935, themes: ["revolution", "class"] },
+                { title: "7 Boxes", year: 2012, era: "Contemporary", eraStart: 2012, themes: ["urban"] },
+                { title: "The Heiresses", year: 2018, era: "Contemporary", eraStart: 2018, themes: ["class"] }
+            ]},
+            ecuador: { name: "Ecuador", films: [
+                { title: "Measuring the World", year: 2012, era: "1799–1804 (Humboldt) · also Venezuela, Colombia & Peru", eraStart: 1799, themes: ["colonialism", "indigenous"] },
+                { title: "Such Is Life in the Tropics", year: 2016, era: "Contemporary", eraStart: 2016, themes: ["urban", "class"] },
+                { title: "Extinct", year: 2021, era: "Contemporary (Galápagos)", eraStart: 2021, themes: ["family"] },
+                { title: "End of the Spear", year: 2005, era: "1956 (Operation Auca)", eraStart: 1956, themes: ["indigenous", "colonialism"] },
+                { title: "Ratas, ratones, rateros", year: 1999, era: "1990s", eraStart: 1999, themes: ["urban"] },
+                { title: "Crónicas", year: 2004, era: "2000s", eraStart: 2004, themes: ["urban", "narco"] },
+                { title: "Qué tan lejos", year: 2006, era: "Contemporary", eraStart: 2006, themes: ["class"] }
+            ]},
+            guyana: { name: "Guyana", films: [
+                { title: "The Terror and the Time", year: 1979, era: "1953 uprising", eraStart: 1953, themes: ["colonialism", "revolution"] },
+                { title: "The Mighty Quinn", year: 1989, era: "Contemporary", eraStart: 1989, themes: ["family"] }
+            ]},
+            suriname: { name: "Suriname", films: [
+                { title: "Wan Pipel", year: 1976, era: "1970s", eraStart: 1976, themes: ["afro", "class"] }
+            ]},
+            "french-guiana": { name: "French Guiana", films: [
+                { title: "Papillon (1973)", year: 1973, era: "1930s–40s (penal colony)", eraStart: 1933, themes: ["class"] },
+                { title: "Papillon (2017)", year: 2017, era: "1930s–40s (penal colony)", eraStart: 1933, themes: ["class"] }
+            ]}
+        };
+
+        // ---- Films made by filmmakers from OUTSIDE South America ----
+        // (foreign productions about the region; everything else counts as regional)
+        const foreignFilms = new Set([
+            "Black Orpheus", "The Salt of the Earth", "Death and the Maiden",
+            "The Royal Hunt of the Sun", "The Bridge of San Luis Rey",
+            "Aguirre, the Wrath of God", "Fitzcarraldo", "The Dancer Upstairs",
+            "The Wages of Fear", "Even the Rain", "The Devil's Miner",
+            "Quantum of Solace", "The Mission", "Measuring the World", "End of the Spear",
+            "Medicine Man", "Memoria", "Missing",
+            "Our Brand Is Crisis", "The Penguin Lessons", "Proof of Life", "State of Siege",
+            "At Play in the Fields of the Lord", "Azor", "Death in the Garden", "Evita",
+            "The House of the Spirits",
+            "Operation Finale", "The Four Horsemen of the Apocalypse", "Alive",
+            "Dinosaurs: Giants of Patagonia", "Kiss of the Spider Woman (2025)",
+            "Kiss of the Spider Woman (1985)", "Burn!", "That Man from Rio",
+            "A Handful of Dust", "The Lost City of Z", "Anaconda", "Jungle Cruise",
+            "Rio", "Rio 2", "Elcano & Magellan", "Maria Full of Grace", "Encanto",
+            "The Road to El Dorado", "Romancing the Stone", "The Adventurers", "Extinct",
+            "Touching the Void", "Dora and the Lost City of Gold", "Paddington",
+            "Paddington 2", "Paddington in Peru", "The Emperor's New Groove", "Yes Day",
+            "Up", "Society of the Snow", "The Mighty Quinn", "Papillon (1973)", "Papillon (2017)",
+            "Clear and Present Danger", "Triple Frontier",
+            "Blow", "American Made", "Loving Pablo", "Colombiana", "Collateral Damage", "Miami Vice",
+            "Fast Five", "The Emerald Forest", "The Rundown", "The Green Inferno", "Butch Cassidy and the Sundance Kid",
+            "Blackthorn",
+            "The Boys from Brazil", "The House on Garibaldi Street", "Operation Eichmann", "Notorious"
+        ]);
+        const originOf = f => foreignFilms.has(f.title) ? 'foreign' : 'regional';
+        const originLabel = { regional: 'By South Americans', foreign: 'By outsiders' };
+
+        let selectedCountry = null;
+        let activeTheme = 'all';
+        let activeOrigin = 'all';
+        let currentFilms = [];
+        let currentSortOrder = 'era';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            buildThemeButtons();
+            document.querySelectorAll('.country').forEach(c => c.addEventListener('click', handleCountryClick));
+            document.querySelectorAll('.origin-btn').forEach(b => b.addEventListener('click', handleOriginClick));
+            // Click empty map background -> clear the country selection
+            document.querySelector('.map-container').addEventListener('click', (e) => {
+                if (!e.target.closest('.country') && !e.target.closest('.origin-filter')) deselectCountry();
+            });
+        });
+
+        const filtersActive = () => activeTheme !== 'all' || activeOrigin !== 'all';
+
+        function filmMatches(f) {
+            return (activeTheme === 'all' || f.themes.includes(activeTheme)) &&
+                   (activeOrigin === 'all' || originOf(f) === activeOrigin);
+        }
+
+        function filterSummary() {
+            const parts = [];
+            if (activeTheme !== 'all') parts.push(themeInfo[activeTheme].label);
+            if (activeOrigin !== 'all') parts.push(originLabel[activeOrigin]);
+            return parts.join(' · ');
+        }
+
+        function highlightColor() {
+            return activeTheme !== 'all' ? themeInfo[activeTheme].color : '#b06ab3';
+        }
+
+        function clearHighlight() {
+            document.querySelectorAll('.country').forEach(c => { c.classList.remove('active'); c.style.fill = ''; });
+        }
+
+        function deselectCountry() {
+            if (!selectedCountry) return;
+            const el = document.getElementById(selectedCountry);
+            if (el) el.classList.remove('active');
+            selectedCountry = null;
+            resetPanel();
+            if (filtersActive()) highlightByFilters();
+        }
+
+        function buildThemeButtons() {
+            const bar = document.getElementById('theme-filters');
+            bar.innerHTML = '';  // idempotent: avoid duplicate buttons if init runs twice
+            for (const [key, info] of Object.entries(themeInfo)) {
+                const btn = document.createElement('button');
+                btn.className = 'theme-btn';
+                btn.dataset.theme = key;
+                btn.textContent = info.label;
+                btn.style.borderColor = info.color;
+                btn.style.color = info.color;
+                btn.addEventListener('click', handleThemeClick);
+                bar.appendChild(btn);
+            }
+        }
+
+        function afterFilterChange() {
+            if (selectedCountry) {
+                displayFilms(selectedCountry);
+            } else if (filtersActive()) {
+                highlightByFilters();
+            } else {
+                clearHighlight();
+                resetPanel();
+            }
+        }
+
+        function handleCountryClick(e) {
+            const countryId = e.target.id;
+            if (selectedCountry === countryId) { deselectCountry(); return; }
+
+            clearHighlight();
+            e.target.classList.add('active');
+            selectedCountry = countryId;
+            displayFilms(countryId);
+        }
+
+        function handleThemeClick(e) {
+            const theme = e.target.dataset.theme;
+            // Re-click the active theme to clear it (no "All Themes" button needed)
+            activeTheme = (activeTheme === theme) ? 'all' : theme;
+            paintThemeButtons();
+            afterFilterChange();
+        }
+
+        function paintThemeButtons() {
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                const key = btn.dataset.theme;
+                if (key === activeTheme) {
+                    btn.classList.add('active');
+                    btn.style.background = themeInfo[key].color;
+                    btn.style.color = 'white';
+                } else {
+                    btn.classList.remove('active');
+                    btn.style.background = 'white';
+                    btn.style.color = themeInfo[key].color;
+                }
+            });
+        }
+
+        function handleOriginClick(e) {
+            e.stopPropagation();
+            const origin = e.currentTarget.dataset.origin;
+            activeOrigin = (activeOrigin === origin) ? 'all' : origin;
+            document.querySelectorAll('.origin-btn').forEach(btn =>
+                btn.classList.toggle('active', btn.dataset.origin === activeOrigin));
+            afterFilterChange();
+        }
+
+        function resetPanel() {
+            document.getElementById('country-name').textContent = 'Select a Country';
+            document.getElementById('panel-sub').textContent = '';
+            document.getElementById('instructions').style.display = 'block';
+            document.getElementById('film-list').innerHTML = '';
+            document.getElementById('sort-buttons').style.display = 'none';
+        }
+
+        function displayFilms(countryId) {
+            const country = filmDatabase[countryId];
+            document.getElementById('instructions').style.display = 'none';
+
+            if (!country) { resetPanel(); return; }
+
+            document.getElementById('country-name').textContent = country.name;
+
+            if (country.note) {
+                document.getElementById('panel-sub').textContent = 'Overseas territory';
+                document.getElementById('sort-buttons').style.display = 'none';
+                document.getElementById('film-list').innerHTML = `<div class="note-box">${country.note}</div>`;
+                return;
+            }
+
+            const films = country.films.filter(filmMatches);
+            currentFilms = films;
+
+            if (films.length === 0) {
+                document.getElementById('panel-sub').textContent = filterSummary();
+                document.getElementById('film-list').innerHTML = '<p>No films match the current filters for this country.</p>';
+                document.getElementById('sort-buttons').style.display = 'none';
+                return;
+            }
+
+            const sum = filterSummary();
+            document.getElementById('panel-sub').textContent =
+                films.length + ' film' + (films.length > 1 ? 's' : '') + (sum ? ' · ' + sum : '');
+            document.getElementById('sort-buttons').style.display = 'block';
+            sortFilms(currentSortOrder);
+        }
+
+        function renderFilms(films) {
+            document.getElementById('film-list').innerHTML = films.map(film => {
+                const badge = originOf(film) === 'foreign'
+                    ? `<span class="origin-badge" title="Made by filmmakers from outside South America">Outsider film</span>`
+                    : '';
+                return `
+                <div class="film-item" style="border-left-color:${themeInfo[film.themes[0]].color}">
+                    <div class="film-title">
+                        ${film.title}
+                        <a href="${getWikipediaUrl(film.title)}" target="_blank"
+                           style="margin-left: 6px; text-decoration: none;" title="View on Wikipedia">
+                            <svg style="width: 15px; height: 15px; vertical-align: middle; opacity: 0.55;"
+                                 onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </a>
+                        <a href="${getSearchUrl(film)}" target="_blank"
+                           style="margin-left: 5px; text-decoration: none;" title="Search trailers on YouTube">
+                            <svg style="width: 17px; height: 17px; vertical-align: middle; opacity: 0.55; color:#c4302b;"
+                                 onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.55'"
+                                 viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4h0s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.9c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.9c0-1.7-.2-3.3-.2-3.3zM10 14.5v-5l4.2 2.5-4.2 2.5z"></path>
+                            </svg>
+                        </a>
+                        ${film.trailer ? `<a class="ot-link" href="${getOfficialTrailerUrl(film)}" target="_blank" title="Official trailer (verified)">OT</a>` : ''}
+                        <a class="rvw-link${film.review ? ' rvw-seeded' : ''}" href="${getReviewUrl(film)}" target="_blank" title="${film.review ? 'Curated review' : 'Search reviews on YouTube'}">RVW</a>
+                        ${badge}
+                    </div>
+                    <div class="film-meta">Released ${film.year} · <span class="film-era">Set: ${film.era}</span></div>
+                    <div class="film-themes">
+                        ${film.themes.map(t => `<span class="theme-tag" style="background:${themeInfo[t].color}">${themeInfo[t].label}</span>`).join('')}
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function sortFilms(sortBy) {
+            if (currentFilms.length === 0) return;
+            currentSortOrder = sortBy;
+            let sorted = [...currentFilms];
+
+            if (sortBy === 'title') {
+                sorted.sort((a, b) => a.title.replace(/^(The |A )/i, '').localeCompare(b.title.replace(/^(The |A )/i, '')));
+            } else if (sortBy === 'year') {
+                sorted.sort((a, b) => a.year - b.year);
+            } else if (sortBy === 'era') {
+                sorted.sort((a, b) => a.eraStart - b.eraStart);
+            }
+
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.classList.remove('active');
+                const label = btn.textContent.toLowerCase();
+                if ((sortBy === 'era' && label === 'era') ||
+                    (sortBy === 'year' && label === 'release') ||
+                    (sortBy === 'title' && label === 'title')) btn.classList.add('active');
+            });
+
+            renderFilms(sorted);
+        }
+
+        function highlightByFilters() {
+            clearHighlight();
+            document.getElementById('instructions').style.display = 'none';
+
+            if (!filtersActive()) { resetPanel(); return; }
+
+            const color = highlightColor();
+            const matches = [];
+            for (const [id, data] of Object.entries(filmDatabase)) {
+                if (!data.films) continue;
+                const count = data.films.filter(filmMatches).length;
+                if (count > 0) {
+                    matches.push({ name: data.name, count });
+                    const el = document.getElementById(id);
+                    if (el) el.style.fill = color;
+                }
+            }
+
+            document.getElementById('country-name').textContent = filterSummary();
+            document.getElementById('panel-sub').textContent = 'Filter overview';
+            document.getElementById('sort-buttons').style.display = 'none';
+
+            if (matches.length > 0) {
+                const list = matches
+                    .sort((a, b) => b.count - a.count)
+                    .map(c => `<strong>${c.name}</strong> (${c.count})`).join(', ');
+                document.getElementById('film-list').innerHTML = `
+                    <p style="margin-bottom:10px;">Countries with a matching film:</p>
+                    <p style="line-height:1.7;">${list}</p>
+                    <p style="margin-top:18px; font-style:italic; color:#888;">Click a highlighted country to see its films.</p>`;
+            } else {
+                document.getElementById('film-list').innerHTML = '<p>No films match the current filters.</p>';
+            }
+        }
+
+        // Always-available YouTube search (never goes stale)
+        function getSearchUrl(film) {
+            return 'https://www.youtube.com/results?search_query=' +
+                   encodeURIComponent(film.title + ' ' + film.year + ' trailer');
+        }
+        // Verified official trailer, only when `film.trailer` (YouTube id or full url) is set
+        function getOfficialTrailerUrl(film) {
+            if (!film.trailer) return '';
+            return /^https?:/.test(film.trailer)
+                ? film.trailer
+                : 'https://www.youtube.com/watch?v=' + film.trailer;
+        }
+        // Reviews: a curated video when `film.review` is set, else a YouTube review search
+        function getReviewUrl(film) {
+            if (film.review) {
+                return /^https?:/.test(film.review)
+                    ? film.review
+                    : 'https://www.youtube.com/watch?v=' + film.review;
+            }
+            return 'https://www.youtube.com/results?search_query=' +
+                   encodeURIComponent(film.title + ' ' + film.year + ' review');
+        }
+
+        function getWikipediaUrl(title) {
+            const overrides = {
+                'Zama': 'Zama_(film)',
+                'Camila': 'Camila_(film)',
+                'La Patagonia Rebelde': 'Rebellion_in_Patagonia',
+                'The Motorcycle Diaries': 'The_Motorcycle_Diaries_(film)',
+                'The Penguin Lessons': 'The_Penguin_Lessons',
+                'The Hour of the Furnaces': 'The_Hour_of_the_Furnaces',
+                'Kuarup': 'Kuarup_(film)',
+                'The Official Story': 'The_Official_Story',
+                'The Secret in Their Eyes': 'The_Secret_in_Their_Eyes',
+                'La Ciénaga': 'La_Ciénaga_(film)',
+                'Nine Queens': 'Nine_Queens',
+                'Chronicles of a Wandering Saint': 'Chronicles_of_a_Wandering_Saint',
+                'Argentina, 1985': 'Argentina,_1985',
+                'The Clan': 'The_Clan_(2015_film)',
+                'How Tasty Was My Little Frenchman': 'How_Tasty_Was_My_Little_Frenchman',
+                'Black Orpheus': 'Black_Orpheus',
+                'Barren Lives': 'Barren_Lives_(film)',
+                'Black God, White Devil': 'Black_God,_White_Devil',
+                'Pixote': 'Pixote',
+                'Central Station': 'Central_Station_(film)',
+                'City of God': 'City_of_God_(2002_film)',
+                'Carandiru': 'Carandiru_(film)',
+                'Wild Tales': 'Wild_Tales_(film)',
+                'Man Facing Southeast': 'Man_Facing_Southeast',
+                'Jauja': 'Jauja_(film)',
+                'Intimate Stories': 'Intimate_Stories',
+                'Blessed by Fire': 'Blessed_by_Fire',
+                'Operation Finale': 'Operation_Finale',
+                'The Boys from Brazil': 'The_Boys_from_Brazil_(film)',
+                'Notorious': 'Notorious_(1946_film)',
+                'The German Doctor': 'The_German_Doctor',
+                'The House on Garibaldi Street': 'The_House_on_Garibaldi_Street',
+                'Operation Eichmann': 'Operation_Eichmann_(film)',
+                'The Four Horsemen of the Apocalypse': 'The_Four_Horsemen_of_the_Apocalypse_(1962_film)',
+                'XXY': 'XXY_(film)',
+                'Underdogs': 'Metegol',
+                'Alive': 'Alive_(1993_film)',
+                'Dinosaurs: Giants of Patagonia': 'Dinosaurs:_Giants_of_Patagonia',
+                'Kiss of the Spider Woman (2025)': 'Kiss_of_the_Spider_Woman_(2025_film)',
+                'Kiss of the Spider Woman (1985)': 'Kiss_of_the_Spider_Woman_(1985_film)',
+                'Burn!': 'Burn!',
+                'That Man from Rio': 'That_Man_from_Rio',
+                'A Handful of Dust': 'A_Handful_of_Dust_(film)',
+                'Carlota Joaquina': 'Carlota_Joaquina,_Princess_of_Brazil',
+                'Xica da Silva': 'Xica_da_Silva',
+                'The Lost City of Z': 'The_Lost_City_of_Z_(film)',
+                'The Age of the Earth': 'The_Age_of_the_Earth',
+                'Aquarius': 'Aquarius_(film)',
+                'Neon Bull': 'Neon_Bull',
+                'The Second Mother': 'The_Second_Mother_(2015_film)',
+                'The Way He Looks': 'The_Way_He_Looks',
+                'Anaconda': 'Anaconda_(1997_film)',
+                'Jungle Cruise': 'Jungle_Cruise_(film)',
+                'Rio': 'Rio_(2011_film)',
+                'Rio 2': 'Rio_2',
+                'Neruda': 'Neruda_(film)',
+                'Chile, Obstinate Memory': 'Chile,_Obstinate_Memory',
+                'Gloria': 'Gloria_(2013_film)',
+                'The Club': 'The_Club_(2015_film)',
+                'The Wolf House': 'The_Wolf_House',
+                'The Dance of Reality': 'The_Dance_of_Reality',
+                'Endless Poetry': 'Endless_Poetry',
+                'Elcano & Magellan': 'Elcano_%26_Magellan:_The_First_Voyage_Around_the_World',
+                'Maria Full of Grace': 'Maria_Full_of_Grace',
+                'The Wind Journeys': 'The_Wind_Journeys',
+                'Of Love and Other Demons': 'Of_Love_and_Other_Demons_(film)',
+                'Encanto': 'Encanto',
+                'The Road to El Dorado': 'The_Road_to_El_Dorado',
+                'Romancing the Stone': 'Romancing_the_Stone',
+                'The Adventurers': 'The_Adventurers_(1970_film)',
+                'Such Is Life in the Tropics': 'Such_Is_Life_in_the_Tropics',
+                'Extinct': 'Extinct_(film)',
+                'Magallanes': 'Magallanes_(film)',
+                'Wiñaypacha': 'Eternity_(2017_film)',
+                'Days of Santiago': 'Days_of_Santiago',
+                'Paper Dove': 'Paper_Dove_(film)',
+                'Touching the Void': 'Touching_the_Void_(film)',
+                'Dora and the Lost City of Gold': 'Dora_and_the_Lost_City_of_Gold',
+                'Paddington': 'Paddington_(film)',
+                'Paddington 2': 'Paddington_2',
+                'Paddington in Peru': 'Paddington_in_Peru',
+                "The Emperor's New Groove": 'The_Emperor%27s_New_Groove',
+                'Yes Day': 'Yes_Day',
+                'From Afar': 'From_Afar_(film)',
+                'Up': 'Up_(2009_film)',
+                'Society of the Snow': 'Society_of_the_Snow',
+                'The Mighty Quinn': 'The_Mighty_Quinn_(film)',
+                'Papillon (1973)': 'Papillon_(1973_film)',
+                'Papillon (2017)': 'Papillon_(2017_film)',
+                'Hans Staden': 'https://pt.wikipedia.org/wiki/Hans_Staden_(filme)',
+                'Death in the Garden': 'Death_in_the_Garden',
+                'At Play in the Fields of the Lord': 'At_Play_in_the_Fields_of_the_Lord',
+                'Xingu': 'Xingu_(film)',
+                'The Year My Parents Went on Vacation': 'The_Year_My_Parents_Went_on_Vacation',
+                'Bacurau': 'Bacurau',
+                'Estômago: A Gastronomic Story': 'Estômago',
+                'Eva Perón': 'Eva_Perón:_The_True_Story',
+                'Evita': 'Evita_(1996_film)',
+                'Azor': 'Azor_(film)',
+                "Chile '76": '1976_(film)',
+                'The House of the Spirits': 'The_House_of_the_Spirits_(film)',
+                'Elite Squad': 'Elite_Squad',
+                'Elite Squad: The Enemy Within': 'Elite_Squad:_The_Enemy_Within',
+                "A Dog's Will": "A_Dog's_Will",
+                'Medicine Man': 'Medicine_Man_(film)',
+                "I'm Still Here": "I'm_Still_Here_(2024_film)",
+                'The Secret Agent': 'The_Secret_Agent_(2025_film)',
+                'The Jackal of Nahueltoro': 'Jackal_of_Nahueltoro_(film)',
+                'The Settlers': 'The_Settlers_(2023_film)',
+                'Clear and Present Danger': 'Clear_and_Present_Danger_(film)',
+                'Triple Frontier': 'Triple_Frontier_(film)',
+                'Blow': 'Blow_(film)',
+                'American Made': 'American_Made_(film)',
+                'Loving Pablo': 'Loving_Pablo',
+                'Colombiana': 'Colombiana',
+                'Collateral Damage': 'Collateral_Damage_(2002_film)',
+                'Miami Vice': 'Miami_Vice_(film)',
+                'Fast Five': 'Fast_Five',
+                'The Emerald Forest': 'The_Emerald_Forest',
+                'The Rundown': 'The_Rundown',
+                'The Green Inferno': 'The_Green_Inferno',
+                'Butch Cassidy and the Sundance Kid': 'Butch_Cassidy_and_the_Sundance_Kid',
+                'Blackthorn': 'Blackthorn_(film)',
+                'The Colors of the Mountain': 'The_Colors_of_the_Mountain',
+                'The Battle of Chile': 'The_Battle_of_Chile',
+                'Missing': 'Missing_(1982_film)',
+                'Caliche sangriento': 'Caliche_sangriento',
+                'Sayen': 'Sayen',
+                'Sayen: Desert Road': 'Sayen',
+                'Sayen: The Huntress': 'Sayen',
+                'Machuca': 'Machuca',
+                'No': 'No_(2012_film)',
+                'Nostalgia for the Light': 'Nostalgia_for_the_Light',
+                'A Fantastic Woman': 'A_Fantastic_Woman',
+                'Death and the Maiden': 'Death_and_the_Maiden_(film)',
+                'Quantum of Solace': 'Quantum_of_Solace',
+                'The Wages of Fear': 'The_Wages_of_Fear',
+                'Measuring the World': 'Measuring_the_World_(film)',
+                'Even the Rain': 'Even_the_Rain',
+                "The Devil's Miner": "The_Devil's_Miner",
+                'The Salt of the Earth': 'The_Salt_of_the_Earth_(2014_film)',
+                'The Pearl Button': 'The_Pearl_Button',
+                'Aguirre, the Wrath of God': 'Aguirre,_the_Wrath_of_God',
+                'Fitzcarraldo': 'Fitzcarraldo',
+                'The Mission': 'The_Mission_(1986_film)',
+                'The Royal Hunt of the Sun': 'The_Royal_Hunt_of_the_Sun_(film)',
+                'The Bridge of San Luis Rey': 'The_Bridge_of_San_Luis_Rey_(2004_film)',
+                'Kukuli': 'Kukuli',
+                'The Green Wall': 'The_Green_Wall',
+                'Madeinusa': 'Madeinusa',
+                'The Dancer Upstairs': 'The_Dancer_Upstairs_(film)',
+                'The Milk of Sorrow': 'The_Milk_of_Sorrow',
+                'Embrace of the Serpent': 'Embrace_of_the_Serpent',
+                'Proof of Life': 'Proof_of_Life',
+                'Cóndores no entierran todos los días': 'Cóndores_no_entierran_todos_los_días',
+                'Birds of Passage': 'Birds_of_Passage_(film)',
+                'Rodrigo D: No Future': 'Rodrigo_D:_No_Future',
+                'The Rose Seller': 'The_Rose_Seller',
+                'Monos': 'Monos_(film)',
+                'Memoria': 'Memoria_(2021_film)',
+                'The Liberator': 'The_Liberator_(film)',
+                'Secuestro Express': 'Secuestro_Express',
+                'Postcards from Leningrad': 'Postcards_from_Leningrad',
+                'Bad Hair': 'Bad_Hair_(2013_film)',
+                'Our Brand Is Crisis': 'Our_Brand_Is_Crisis_(2015_film)',
+                'Blood of the Condor': 'Blood_of_the_Condor',
+                'The Most Beautiful of My Very Best Years': 'The_Most_Beautiful_of_My_Very_Best_Years',
+                'The Courage of the People': 'The_Courage_of_the_People',
+                'Utama': 'Utama',
+                'A Twelve-Year Night': 'A_Twelve-Year_Night',
+                "The Pope's Toilet": 'The_Pope%27s_Toilet',
+                'Whisky': 'Whisky_(film)',
+                'State of Siege': 'State_of_Siege_(film)',
+                'Paraguayan Hammock': 'Paraguayan_Hammock',
+                '7 Boxes': '7_Boxes',
+                'The Heiresses': 'The_Heiresses_(2018_film)',
+                'End of the Spear': 'End_of_the_Spear',
+                'Ratas, ratones, rateros': 'Ratas,_ratones,_rateros',
+                'Crónicas': 'Crónicas',
+                'Qué tan lejos': 'Qué_tan_lejos',
+                'The Terror and the Time': 'The_Terror_and_the_Time',
+                'Wan Pipel': 'Wan_Pipel'
+            };
+            if (overrides[title]) {
+                const o = overrides[title];
+                return /^https?:/.test(o) ? o : 'https://en.wikipedia.org/wiki/' + o;
+            }
+            return 'https://en.wikipedia.org/wiki/' + encodeURIComponent(title.replace(/ /g, '_'));
+        }
+    </script>
+
+
+</body></html>
