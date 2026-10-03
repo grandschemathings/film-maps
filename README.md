@@ -22,6 +22,14 @@ what could you actually teach from this shelf?
 - **[History of England — a film syllabus](https://grandschemathings.github.io/film-maps/england-course.html)** —
   Roman Britain to the miners' strike, 139 films placed from a 146-item shelf. The deepest
   shelf here for television, so several weeks rest on a serial rather than a feature.
+- **[History of France — a film syllabus](https://grandschemathings.github.io/film-maps/france-course.html)** —
+  Vercingetorix to the banlieue. The deepest collection here, and the clearest case that a national
+  course is inherently cross-shelf: fifty of the films it needs live under Ancient Rome, the World
+  Wars, the Holocaust shelf and Africa.
+- **[History of Spain — a film syllabus](https://grandschemathings.github.io/film-maps/spain-course.html)** —
+  Al-Andalus to the present in twenty-four sessions rather than thirty, because the shelf is thinner
+  and padding it would misrepresent it. The Reconquista and Golden Age rest almost entirely on
+  series, and every Conquest film sits on the MesoAmerica shelf.
 - **[Russian Cinema — an extension](https://grandschemathings.github.io/film-maps/russia-film-extension.html)** —
   the optional side trip to the Russia course, on the model of an alumni travel brochure.
   The main course treats these films as evidence about the past; the extension treats them as
