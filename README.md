@@ -30,6 +30,10 @@ what could you actually teach from this shelf?
   Al-Andalus to the present in twenty-four sessions rather than thirty, because the shelf is thinner
   and padding it would misrepresent it. The Reconquista and Golden Age rest almost entirely on
   series, and every Conquest film sits on the MesoAmerica shelf.
+- **[English Literature on Film — an extension](https://grandschemathings.github.io/film-maps/england-literature-extension.html)** —
+  Shakespeare to Tolkien, following the books rather than the history. 585 films in the collection
+  are adaptations and 570 are not on the Literature shelf; Austen alone sits across seven shelves.
+  A shelf needs a physical move, which is why only two authors have one. A syllabus does not.
 - **[Russian Cinema — an extension](https://grandschemathings.github.io/film-maps/russia-film-extension.html)** —
   the optional side trip to the Russia course, on the model of an alumni travel brochure.
   The main course treats these films as evidence about the past; the extension treats them as
