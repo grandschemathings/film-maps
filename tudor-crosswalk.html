@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Two Tellings of the Tudors</title>
+<meta name="description" content="Where a 1970s BBC studio serial and a 2010s Philippa Gregory adaptation tell the same year - 26 parts against 35, matched episode to episode.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+:root{
+  --ground:#F2F3F4; --card:#FFFFFF; --ink:#16181C; --ink-2:#3A4048; --muted:#6D737B;
+  --rule:#D7DADE; --rule-soft:#E7E9EC;
+  --bbc:#15639E; --bbc-soft:#E3ECF4;
+  --pg:#AE5A05;  --pg-soft:#F6EBDC;
+  --wire:#A8AEB6; --wire-ev:#6D737B;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0F1114; --card:#171A1E; --ink:#E6E8EA; --ink-2:#B6BCC3; --muted:#868D95;
+  --rule:#2A2F35; --rule-soft:#22262B;
+  --bbc:#4A96CC; --bbc-soft:#15222E;
+  --pg:#C8822A;  --pg-soft:#2A2114;
+  --wire:#454B52; --wire-ev:#7F868E;
+}}
+:root[data-theme="dark"]{
+  --ground:#0F1114; --card:#171A1E; --ink:#E6E8EA; --ink-2:#B6BCC3; --muted:#868D95;
+  --rule:#2A2F35; --rule-soft:#22262B;
+  --bbc:#4A96CC; --bbc-soft:#15222E;
+  --pg:#C8822A;  --pg-soft:#2A2114;
+  --wire:#454B52; --wire-ev:#7F868E;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--ground); color:var(--ink); margin:0;
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px; margin:0 auto; padding:0 16px 96px}
+@media(min-width:720px){.wrap{padding:0 24px 96px}}
+a{color:inherit}
+header.mast{padding:56px 0 30px; border-bottom:1px solid var(--rule)}
+h1{font-family:Spectral,Georgia,serif; font-weight:300; font-size:clamp(2.1rem,5.4vw,3.4rem);
+  line-height:1.07; letter-spacing:-.015em; margin:0 0 14px; text-wrap:balance}
+h1 em{font-style:italic; font-weight:400}
+.standfirst{max-width:64ch; color:var(--ink-2); font-size:1.03rem; margin:0 0 26px}
+.stats{display:flex; flex-wrap:wrap; border:1px solid var(--rule); border-radius:2px;
+  overflow:hidden; background:var(--card)}
+.stat{flex:1 1 150px; padding:13px 16px; border-right:1px solid var(--rule-soft)}
+.stat:last-child{border-right:none}
+.stat b{display:block; font-family:"IBM Plex Mono",monospace; font-size:1.42rem; font-weight:500;
+  letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+.stat span{display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--muted); margin-top:3px}
+.controls{display:flex; flex-wrap:wrap; gap:14px; align-items:center; padding:20px 0;
+  position:sticky; top:0; background:var(--ground); z-index:20; border-bottom:1px solid var(--rule-soft)}
+.seg{display:inline-flex; border:1px solid var(--rule); border-radius:2px; overflow:hidden; background:var(--card)}
+.seg button{font:inherit; font-size:.82rem; padding:7px 15px; border:0; cursor:pointer;
+  background:transparent; color:var(--ink-2); border-right:1px solid var(--rule-soft)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink); color:var(--ground)}
+.hint{font-size:.8rem; color:var(--muted)}
+.legend{display:flex; flex-wrap:wrap; gap:16px; align-items:center; font-size:.8rem;
+  color:var(--ink-2); padding:16px 0 0}
+.key{display:inline-flex; align-items:center; gap:7px}
+.sw{width:13px; height:13px; border-radius:2px; flex:none}
+.sw.l{background:var(--bbc)} .sw.r{background:var(--pg)}
+.sw.u{background:transparent; border:1px dashed var(--muted)}
+
+/* ---- the crosswalk ---- */
+.crosshead{display:grid; gap:0 10px; margin-top:26px;
+  grid-template-columns:minmax(0,1fr) minmax(150px,420px) minmax(0,1fr)}
+.cross{position:relative; display:grid; gap:0 10px; overflow:hidden;
+  grid-template-columns:minmax(0,1fr) minmax(150px,420px) minmax(0,1fr);
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%);
+  padding:14px 0 20px}
+.reel{display:flex; flex-direction:column; gap:8px; will-change:transform}
+@media (prefers-reduced-motion:reduce){ .reel{will-change:auto} }
+#wires{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1;
+  overflow:visible}
+.col{display:flex; flex-direction:column; position:relative; z-index:2}
+.colhead{font-size:.72rem; margin-bottom:8px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted);
+  padding-bottom:8px; border-bottom:1px solid var(--rule); margin-bottom:4px}
+.colhead b{display:block; font-size:.95rem; letter-spacing:0; text-transform:none; color:var(--ink);
+  font-family:Spectral,Georgia,serif; font-weight:400; margin-top:3px}
+.box{background:var(--card); border:1px solid var(--rule); border-radius:3px; padding:9px 12px;
+  display:grid; grid-template-columns:auto 1fr; gap:2px 10px; align-items:baseline; cursor:default;
+  transition:border-color .12s, box-shadow .12s, opacity .12s}
+.col.L .box{border-left:3px solid var(--bbc)}
+.col.R .box{border-left:3px solid var(--pg)}
+.col.L .box.un, .col.R .box.un{border-left-style:dashed; border-left-color:var(--muted); background:transparent}
+.box .idx{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--muted);
+  font-variant-numeric:tabular-nums; grid-row:1/3}
+.box h3{margin:0; font-size:.92rem; font-weight:500; line-height:1.3}
+.box .meta{margin:0; grid-column:2; font-size:.72rem; color:var(--muted);
+  display:flex; flex-wrap:wrap; gap:8px}
+.box .yr{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+.box.on{border-color:var(--ink); box-shadow:0 0 0 1px var(--ink)}
+.cross.focus .box:not(.on){opacity:.32}
+.wire{fill:none; stroke:var(--wire); stroke-width:1.1; opacity:.45}
+.wire.ev{stroke:var(--wire-ev); stroke-width:1.7; opacity:1}
+.rail{stroke:var(--rule); stroke-width:1; stroke-dasharray:2 4}
+.cross.focus .wire{opacity:.07}
+.cross.focus .wire.lit{opacity:1; stroke:var(--ink); stroke-width:1.8}
+.lab{font-size:.72rem; fill:var(--ink); font-family:"IBM Plex Sans",sans-serif}
+.lab .yr{font-family:"IBM Plex Mono",monospace}
+.labbg{fill:var(--ground); stroke:var(--rule); stroke-width:1; rx:2}
+.labg{opacity:1}
+.labg.yearonly{opacity:0}
+.cross.showall .labg.yearonly{opacity:1}
+.cross.focus .labg{opacity:.12}
+.cross.focus .labg.lit{opacity:1}
+
+/* ---- table view ---- */
+.tip{position:fixed; z-index:40; width:min(340px,calc(100vw - 32px)); pointer-events:none;
+  background:var(--card); color:var(--ink); border:1px solid var(--rule); border-radius:3px;
+  box-shadow:0 8px 28px rgba(0,0,0,.16); padding:12px 14px; opacity:0;
+  transition:opacity .13s; left:0; top:0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tip{box-shadow:0 8px 28px rgba(0,0,0,.6)}}
+.tip.show{opacity:1}
+.tip.L{border-left:3px solid var(--bbc)} .tip.R{border-left:3px solid var(--pg)}
+.tip h4{margin:0 0 3px; font-size:.95rem; font-weight:600; line-height:1.3}
+.tip .tm{margin:0 0 8px; font-size:.72rem; color:var(--muted);
+  display:flex; flex-wrap:wrap; gap:8px}
+.tip .tm .yr{font-family:"IBM Plex Mono",monospace}
+.tip .td{margin:0; font-size:.83rem; line-height:1.5; color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){ .tip{transition:none} }
+.tablewrap{margin-top:52px; border-top:1px solid var(--rule); padding-top:30px}
+h2{font-family:Spectral,Georgia,serif; font-weight:400; font-size:1.5rem; margin:0 0 6px}
+.sub{color:var(--ink-2); max-width:66ch; margin:0 0 18px}
+table{width:100%; border-collapse:collapse; font-size:.85rem}
+th,td{text-align:left; padding:7px 10px; border-bottom:1px solid var(--rule-soft); vertical-align:top}
+th{font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:500}
+td.y{font-family:"IBM Plex Mono",monospace; white-space:nowrap; font-variant-numeric:tabular-nums}
+td.ev{color:var(--ink)} td.ev.none{color:var(--muted)}
+.notes{margin-top:52px; border-top:1px solid var(--rule); padding-top:30px; max-width:72ch; color:var(--ink-2)}
+.notes h2{color:var(--ink)}
+.notes p{margin:0 0 14px}
+.notes code{font-family:"IBM Plex Mono",monospace; font-size:.85em; background:var(--rule-soft);
+  padding:1px 5px; border-radius:2px}
+.flag{color:var(--ink); font-weight:500}
+
+/* ---- phone: the wires cannot survive two narrow columns, so the table IS the view ---- */
+@media (max-width:780px){
+  .cross,.crosshead,.controls .seg.wires,.diagramonly{display:none}
+  .controls{display:none}
+  .tablewrap{margin-top:26px; border-top:0; padding-top:0}
+  /* ⛔ four columns inside 390px wrap every cell to three lines. Stack each link into
+     its own card instead - same data, one row per card, no horizontal scroll. */
+  table,tbody,tr,td{display:block; width:100%}
+  thead{display:none}
+  tr{border:1px solid var(--rule); border-left:3px solid var(--rule); border-radius:3px;
+     background:var(--card); padding:10px 12px; margin-bottom:8px}
+  tr.un{background:transparent; border-left-style:dashed}
+  td{border:0; padding:1px 0}
+  td.y{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--muted);
+       letter-spacing:.04em; margin-bottom:3px}
+  tr:not(.un) td:nth-child(2)::before{content:"BBC "; color:var(--bbc); font-weight:500}
+  tr:not(.un) td:nth-child(3)::before{content:"PG "; color:var(--pg); font-weight:500}
+  td.ev{margin-top:5px; font-size:.82rem; color:var(--ink-2)}
+  td.ev.none{display:none}
+  tr.un td.ev.none{display:block; color:var(--muted); font-style:italic}
+}
+@media (min-width:781px){ .mobilenote{display:none} }
+</style>
+</head><body>
+<div class="wrap">
+
+<header class="mast">
+  <h1>Two Tellings of the <em>Tudors</em></h1>
+  <p class="standfirst">Both playlists are already in historical order, so laying them side by
+  side turns them into a crosswalk. On the left, three BBC2 studio serials and a 1971 feature,
+  made between 1970 and 1972. On the right, three series and a film adapted from Philippa
+  Gregory between 2008 and 2020. The question is where the two tell the <em>same year</em> —
+  and the answer is a narrow band with long tails at both ends.</p>
+  <div class="stats">
+    <div class="stat"><b>26</b><span>BBC parts, 1485&ndash;1603</span></div>
+    <div class="stat"><b>35</b><span>Gregory parts, 1464&ndash;1536</span></div>
+    <div class="stat"><b>42</b><span>links between them</span></div>
+    <div class="stat"><b>13</b><span>named events</span></div>
+    <div class="stat"><b>21</b><span>parts with no counterpart</span></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="seg wires">
+    <button id="showall" aria-pressed="false">Named events only</button>
+  </div>
+  <span class="hint diagramonly">Hover or tab to any episode to light its links.</span>
+</div>
+
+<div class="legend">
+  <span class="key"><span class="sw l"></span>BBC2 Tudor Trilogy</span>
+  <span class="key"><span class="sw r"></span>Philippa Gregory Adaptations</span>
+  <span class="key"><span class="sw u"></span>no counterpart in the other telling</span>
+</div>
+<p class="diagramonly" style="margin:14px 0 0;color:var(--muted);font-size:.82rem;max-width:72ch">
+  <strong style="color:var(--ink);font-weight:500">Height is running order, not time.</strong>
+  The two run at very different speeds &mdash; so a box on the left is <em>not</em>
+  contemporaneous with the box beside it. Only a drawn link means two parts share a year.
+  The centre channel is the one chronological axis: its labels read top to bottom,
+  1485 to 1536.</p>
+
+<p class="mobilenote" style="margin:20px 0 0;color:var(--muted);font-size:.85rem">
+  The two-column diagram needs a wider screen &mdash; the full crosswalk is in the table below.</p>
+
+<div class="crosshead">
+  <div class="colhead">Left column<b>BBC2 Tudor Trilogy &middot; 1970&ndash;72</b></div>
+  <div></div>
+  <div class="colhead">Right column<b>Philippa Gregory Adaptations &middot; 2008&ndash;20</b></div>
+</div>
+<div class="cross" id="cross">
+  <div class="col L"><div class="reel"><article class="box" data-n="1" data-desc="Henry Tudor emerges victorious over Richard III at the battle of Bosworth Field and seeks to form a coalition from which he hopes to establish a Tudor dynasty."><span class="idx">1</span><h3>Crown in Jeopardy</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1485</span></p></article>
+<article class="box" data-n="2" data-desc="Henry consolidates his power when Elizabeth gives birth to Prince Arthur legitimizing Henry's claim of descent from the legendary monarch."><span class="idx">2</span><h3>Power in the Land</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1486</span></p></article>
+<article class="box" data-n="3" data-desc="Henry's enemies represent commoner Lambert Simnel as the Earl of Warwick, the York pretender. The Earl of Lincoln leaves for Ireland to head the army that is forming against Henry."><span class="idx">3</span><h3>The Schooling of Apes</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1486–1487</span></p></article>
+<article class="box" data-n="4" data-desc="Henry forms an army to defend himself against the Irish-German army coming against him from Ireland."><span class="idx">4</span><h3>The Crowning of Apes</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1487</span></p></article>
+<article class="box un" data-n="5" data-desc="King Henry is intrigued by a preacher who is arrested for heresy and speaks with him to persuade him to give up his dissension against the practices of the Catholic Church. The preacher emphasizes to him the simplicity of the Gospel, and his suffering and convictions impress a young Tower guard."><span class="idx">5</span><h3>The Serpent and the Comforter</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">undated</span></p></article>
+<article class="box" data-n="6" data-desc="The year is 1494 and King Henry is alarmed that the powerful and arrogant Sir William Stanley may be implicated in a plot against his crown."><span class="idx">6</span><h3>The White Hart</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1494–1495</span></p></article>
+<article class="box" data-n="7" data-desc="Addle-brained Sir John Kendall and his dim-witted nephew devise a ludicrous plan to kill the King with a harmless ointment from phony astrologer."><span class="idx">7</span><h3>A Fly in the Ointment</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1496</span></p></article>
+<article class="box" data-n="8" data-desc="Visionary Italian navigator John Cabot has a difficult time convincing Bristol businessmen and the King that his Western voyage to China is practical and profitable."><span class="idx">8</span><h3>The Princely Gift</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1496–1497</span></p></article>
+<article class="box" data-n="9" data-desc="Heavy-handed tax policies lead the peasants of Cornwall to march peacefully in protest on London, but an ambitions nobleman wants to use the pilgrimage to his own advantage."><span class="idx">9</span><h3>Do the Sheep Sin?</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1497</span></p></article>
+<article class="box" data-n="10" data-desc="Commoner Perkin Warbeck, pretender to Henry's throne, finds he's losing support throughout Europe."><span class="idx">10</span><h3>The Man Who Never Was</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1495–1497</span></p></article>
+<article class="box" data-n="11" data-desc="Although Perkin Warbeck enjoys only house arrest for his treason through Henry's mercy, he continues to plot against the King."><span class="idx">11</span><h3>The Strange Shapes of Reality</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1498</span></p></article>
+<article class="box" data-n="12" data-desc="In order to give his dynasty more credibility, Henry tries to arrange a marriage between his son and the Spanish princess, but their are preconditions."><span class="idx">12</span><h3>The Fledgling</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1499</span></p></article>
+<article class="box" data-n="13" data-desc="The year is now 1501 and Henry is now finally secure on the throne with his promising son Arthur about to marry Catherine of Aragon, however in the shadows tragic events are lying in wait for the King."><span class="idx">13</span><h3>The King Without a Face</h3><p class="meta"><span>The Shadow of the Tower</span><span class="yr">1501</span></p></article>
+<article class="box" data-n="14" data-desc="Catalina of Aragon, a Spanish princess, is set to wed Arthur Tudor, eldest son on King Henry VII. Shortly after they wed, Arthur is taken by illness. Catalina then catches the eye of Arthur's brother, Henry. When Henry VII dies, he tells his son Henry that he must marry Catalina. Henry becomes the King of England and marries Catalina. Being loved by her new subjects, Catalina changes her name to the English version, Catherine. After many years, she is still loved by her subjects, but it's a different story with her husband."><span class="idx">14</span><h3>Catherine of Aragon</h3><p class="meta"><span>The Six Wives of Henry VIII</span><span class="yr">1501–1536</span></p></article>
+<article class="box" data-n="15" data-desc="This second episode of the series overlaps with the first, and thus begins when Queen Anne and King Henry are already estranged. After several pregnancies, Anne has provided her husband with only one surviving child, Princess Elizabeth. Extremely unpopular with both the public and the aristocracy, Anne has few friends to protect her when Henry's eye lights upon the virginal Jane Seymour."><span class="idx">15</span><h3>Anne Boleyn</h3><p class="meta"><span>The Six Wives of Henry VIII</span><span class="yr">1533–1536</span></p></article>
+<article class="box" data-n="16" data-desc="Anxious to rid himself of the shrewish Anne Boleyn, and desperate for a son, Henry is charmed by the naive and pious Jane, the daughter of a wealthy country aristocrat."><span class="idx">16</span><h3>Jane Seymour</h3><p class="meta"><span>The Six Wives of Henry VIII</span><span class="yr">1536–1537</span></p></article>
+<article class="box un" data-n="17" data-desc="Religious strife between Catholics and Protestants continues to swell in Europe. To try to balance the Catholic threat of France and Spain, Thomas Cromwell persuades King Henry into a political marriage with the sister of the Protestant German Duke of Cleves."><span class="idx">17</span><h3>Anne of Cleves</h3><p class="meta"><span>The Six Wives of Henry VIII</span><span class="yr">1539–1540</span></p></article>
+<article class="box un" data-n="18" data-desc="The powerful Duke of Norfolk, the leading Catholic aristocrat in England, dangles his teenaged niece Catherine Howard before the aging but still amorous King Henry, who foolishly marries her."><span class="idx">18</span><h3>Catherine Howard</h3><p class="meta"><span>The Six Wives of Henry VIII</span><span class="yr">1540–1542</span></p></article>
+<article class="box un" data-n="19" data-desc="Corpulent and old, Henry makes a final trip to the altar, with the puritan Lady Latimer, Catherine Parr. The new queen brings Henry’s estranged daughters, Mary and Elizabeth, back into the family fold, but irritates the king by debating religion with him and his advisors."><span class="idx">19</span><h3>Catherine Parr</h3><p class="meta"><span>The Six Wives of Henry VIII</span><span class="yr">1543–1547</span></p></article>
+<article class="box un" data-n="20" data-desc="The fragile succession heralds dangerous times for the young Princess Elizabeth. Having narrowly avoided implication in Sir Thomas Seymour's attempted abduction of her sickly half-brother, the boy King Edward VI; she becomes an unintentional figurehead for a Protestant rebellion led by Thomas Wyatt the Younger when her half-sister Mary I of England, a devout Catholic, succeeds to the throne. Will Elizabeth survive her emotionally unstable half-sister's reign?"><span class="idx">20</span><h3>The Lion's Cub</h3><p class="meta"><span>Elizabeth R</span><span class="yr">1549–1558</span></p></article>
+<article class="box un" data-n="21" data-desc="The new Queen Elizabeth I is 25 years old - and unmarried. Her council, particularly the man she trusts most Sir William Cecil, urges her to marry quickly, (to insure the succession, among other valid reasons). Only Lord Robert Dudley, at first her Master of the Horse, and eventually the Earl of Leicester, seems to interest the Queen. When Dudley's wife dies under mysterious circumstances, Elizabeth must decide if she really wants to marry; and if so, is Dudley the right choice?"><span class="idx">21</span><h3>The Marriage Game</h3><p class="meta"><span>Elizabeth R</span><span class="yr">1559–1564</span></p></article>
+<article class="box un" data-n="22" data-desc="Elizabeth meets her most eligible suitor yet: Francois, Duke of Anjou. A marriage will cement France's sought for alliance with England. Both Sir William Cecil and Thomas Radclyffe, 3rd Earl of Sussex (especially the latter), eagerly support this marriage offer. Despite the Puritans' rousing opposition in the country (which her zealously anti-catholic councillor Sir Francis Walsingham secretly approves of), Elizabeth seems taken with the witty and flower-tongued Francois. As her duties as Queen clash with her feelings as a woman (and she discovers to her fury that Dudley has secretly married her cousin Lettice Knollys), Elizabeth faces her toughest decision. In the end, her good friend and councillor Sussex helps Elizabeth make her painfully honest, final decision."><span class="idx">22</span><h3>Shadow in the Sun</h3><p class="meta"><span>Elizabeth R</span><span class="yr">1579–1582</span></p></article>
+<article class="box un" data-n="23" data-desc="Mary Stuart, who was named Queen of Scotland when she was only six days old, is the last Roman Catholic ruler of Scotland. She is imprisoned at the age of 23 by her cousin Elizabeth Tudor, the English Queen and her arch adversary. Nineteen years later the life of Mary is to be ended on the scaffold and with her execution the last threat to Elizabeth's throne has been removed. The two Queens with their contrasting personalities make a dramatic counterpoint to history."><span class="idx">23</span><h3>Mary, Queen of Scots</h3><p class="meta"><span>feature film</span><span class="yr">1561–1587 · set</span></p></article>
+<article class="box un" data-n="24" data-desc="As long as Mary, Queen of Scots lives, she is the focus of plotters and revolutionaries. Despite a harsh clampdown against conspiring Catholics, Mary, in domestic exile, inspires an earnest attempt to overthrow Elizabeth. Is the execution of Mary the only way Elizabeth will remain on the throne? Sir Francis Walsingham definitely thinks so, and will use any means to convince Elizabeth to eliminate Mary. But Elizabeth fears Mary's death will condemn her in the eyes of God. In the end, Elizabeth makes the final tragic choice."><span class="idx">24</span><h3>Horrible Conspiracies</h3><p class="meta"><span>Elizabeth R</span><span class="yr">1586–1587</span></p></article>
+<article class="box un" data-n="25" data-desc="Whispers of war fill the air in Elizabeth's court and in Spain. The infirm King Philip II of Spain is eager to avenge the death of Mary, Queen of Scots, (and incidentally , make good on his inheritance from Mary as the Catholic claimant to the English throne - which Mary bequeathed to him). Philip urges an unprepared fleet, commanded by the incompetent Duke of Medina Sidonia, to sail on England. Even as Elizabeth rebukes the hawks (privateers) in her council (both Walsingham and Sir Francis Drake), with hopes of peace (encouraged by Cecil, who is now Lord Burghley), the Spanish Armada appears on the horizons of England. Her fate and the future of the country now lie in the hands of Drake, and the Navy. England triumphs, but Elizabeth pays a heavy emotional price."><span class="idx">25</span><h3>The Enterprise of England</h3><p class="meta"><span>Elizabeth R</span><span class="yr">1587–1588</span></p></article>
+<article class="box un" data-n="26" data-desc="&quot;He is the sun in splendor, he is all our pride.&quot; Robert Devereux, Earl of Essex ( the stepson of Robert Dudley, Earl of Leicester and the son-in-law of Francis Walsingham), is the people's champion, but he openly disputes the Queen's opinions. Elizabeth 'rewards' his daring feats in Spain with a tougher challenge: to quell the Irish uprising led by O'Neill, Earl of Tyrone. But Essex has a rebellion of his own in mind. Can an old and dying Queen face a final"><span class="idx">26</span><h3>Sweet England's Pride</h3><p class="meta"><span>Elizabeth R</span><span class="yr">1596–1603</span></p></article></div></div>
+  <div class="chan"></div>
+  <div class="col R"><div class="reel"><article class="box un" data-n="1" data-desc="After meeting beautiful widow Elizabeth Woodville, young King Edward IV must choose between love and loyalty. Will a country divided by war and a court divided by jealousy be destroyed by a woman many consider a witch?"><span class="idx">1</span><h3>In Love with the King</h3><p class="meta"><span>The White Queen</span><span class="yr">1464</span></p></article>
+<article class="box un" data-n="2" data-desc="After Elizabeth's coronation, an extravagant display designed to silence critics of their marriage, Edward needs a son to secure his reign. Soon tensions at court escalate into outright war, and Edward must fight those closest to him to retain his crown. Elizabeth faces devastating loss as the full force of Warwick's hatred and power is revealed."><span class="idx">2</span><h3>The Price of Power</h3><p class="meta"><span>The White Queen</span><span class="yr">1465–1469</span></p></article>
+<article class="box un" data-n="3" data-desc="Desperate to further her son's claim to the throne, Margaret Beaufort joins Warwick's rebellion against Edward. The rebellion fails, and the traitors must run for their lives. Jasper Tudor escapes into exile, while Warwick and George sail for France. Elizabeth and her mother turn to witchcraft to stop them, but it is Isabel who is punished."><span class="idx">3</span><h3>The Storm</h3><p class="meta"><span>The White Queen</span><span class="yr">1469–1470</span></p></article>
+<article class="box un" data-n="4" data-desc="Exiled in France, Warwick still plots to control the crown. His youngest daughter Anne is used to make an unexpected alliance, giving him command of a huge army. When Warwick lands in England, Edward must decide whether to fight or run. Terrified, Elizabeth escapes to sanctuary, not knowing whether her husband is alive or dead. She gives birth to a longed-for son, but fears for both their lives as Warwick enters London."><span class="idx">4</span><h3>The Bad Queen</h3><p class="meta"><span>The White Queen</span><span class="yr">1470</span></p></article>
+<article class="box un" data-n="5" data-desc="House Lancaster is restored to the throne, with Warwick in control, but rumors that Edward is returning with an army unsettle the court. Anne sails from France with Margaret of Anjou, uncertain whether they will reach Warwick in time. Divided families face each other across the battlefield. Can Elizabeth's witchcraft save her husband, or will Warwick triumph? As many fall in the battle, everyone's fortunes change forever."><span class="idx">5</span><h3>War at First Hand</h3><p class="meta"><span>The White Queen</span><span class="yr">1470–1471</span></p></article>
+<article class="box un" data-n="6" data-desc="The crown is secure, but there is no peace at court. Elizabeth suffers more emotional turmoil as she loses those closest to her. Margaret Beaufort plans a political marriage to bring her son Henry home from exile—but has she met her match in Lord Stanley? Anne's marriage made her a traitor, so she is handed into George's care. His motives for keeping her away from court are questioned by Richard, who fears for Anne's safety."><span class="idx">6</span><h3>Love and Marriage</h3><p class="meta"><span>The White Queen</span><span class="yr">1471–1472</span></p></article>
+<article class="box un" data-n="7" data-desc="George's anger at losing the Warwick inheritance and his failure to capture the crown resurfaces, with horrific consequences. As the court divides, George openly accuses Elizabeth of witchcraft and Edward of murder. This is treason, and Edward must condemn his own brother to death. Elizabeth finally has revenge on those who killed her father, but it does not bring her comfort."><span class="idx">7</span><h3>Poison and Malmsey Wine</h3><p class="meta"><span>The White Queen</span><span class="yr">1477–1478</span></p></article>
+<article class="box un" data-n="8" data-desc="After years of peace, an untimely death once again engulfs Elizabeth in a fight for the throne. Trapped in sanctuary and threatened by those closest to her, Elizabeth is forced into an alliance with Margaret Beaufort. Suspicion and doubt poison the court, turning friends into enemies and family members into murderers."><span class="idx">8</span><h3>The King is Dead</h3><p class="meta"><span>The White Queen</span><span class="yr">1483</span></p></article>
+<article class="box un" data-n="9" data-desc="The future of the princes in the Tower is in Richard's hands: they are a threat not only to Richard's reign but to Margaret Beaufort's hopes of seeing her son Henry Tudor on the throne. As Margaret plots the boys' removal, Anne is tormented by fears that she has unwittingly sealed the princes' fates. Elizabeth, in sanctuary, is horrified to realize she has made a pact with her enemies and turns to witchcraft to punish the guilty."><span class="idx">9</span><h3>The Princes in the Tower</h3><p class="meta"><span>The White Queen</span><span class="yr">1483</span></p></article>
+<article class="box" data-n="10" data-desc="Princess Elizabeth's engagement to Henry Tudor threatens to divide court loyalties. Richard knows he can no longer avoid the battle which will decide his fate as king. Margaret Beaufort does not know whose side her husband will support, and she fears for her son. As the final battle for the crown draws near, Elizabeth continues her plot to put her daughter on the throne regardless of the battle's outcome."><span class="idx">10</span><h3>The Final Battle</h3><p class="meta"><span>The White Queen</span><span class="yr">1483–1485</span></p></article>
+<article class="box" data-n="11" data-desc="England is in a fractious state as Henry Tudor is set to ascend the throne. Lizzie must fulfill her promise to marry King Henry VII in order to bring peace to the warring nation."><span class="idx">11</span><h3>In Bed with the Enemy</h3><p class="meta"><span>The White Princess</span><span class="yr">1485–1486</span></p></article>
+<article class="box" data-n="12" data-desc="King Henry VII sets out on Royal Progress, in an attempt to establish himself as the new sovereign, but finds a dangerous, deeply divided kingdom. Lizzie's loyalties are further complicated by the child she is expecting."><span class="idx">12</span><h3>Hearts and Minds</h3><p class="meta"><span>The White Princess</span><span class="yr">1486</span></p></article>
+<article class="box" data-n="13" data-desc="Lizzie struggles through her labor while King Henry's envoys embark on a diplomatic mission to Burgundy, a York stronghold abroad. Lizzie learns she has more in common with her husband than she first imagined."><span class="idx">13</span><h3>Burgundy</h3><p class="meta"><span>The White Princess</span><span class="yr">1486–1487</span></p></article>
+<article class="box" data-n="14" data-desc="The York princesses are strategically married off to strengthen the Tudor cause. When King Henry finds himself back on the battlefield to protect his reign, Lizzie learns that the threats they face may be closer to home."><span class="idx">14</span><h3>The Pretender</h3><p class="meta"><span>The White Princess</span><span class="yr">1487</span></p></article>
+<article class="box un" data-n="15" data-desc="Lizzie must deal with her mother's defiant defense of the York cause, while the appearance of a boy in Burgundy claiming to be a young prince threatens to further destabilize King Henry's rule."><span class="idx">15</span><h3>Traitors</h3><p class="meta"><span>The White Princess</span><span class="yr">1491–1492</span></p></article>
+<article class="box" data-n="16" data-desc="King Henry VII and Lizzie travel to Spain in an attempt to secure their son's betrothal. Meanwhile, unrest has been growing in Burgundy and spills over into an English battle."><span class="idx">16</span><h3>English Blood on English Soil</h3><p class="meta"><span>The White Princess</span><span class="yr">1495–1497</span></p></article>
+<article class="box" data-n="17" data-desc="A pretender to the throne is held captive at court, confounding the Tudors, and creating a new rift in Lizzie and King Henry's marriage. Lizzie faces an impossible choice, and makes a risky move to try to eliminate the threat to her family."><span class="idx">17</span><h3>Two Kings</h3><p class="meta"><span>The White Princess</span><span class="yr">1497–1498</span></p></article>
+<article class="box" data-n="18" data-desc="A final confrontation with the pretender exposes King Henry's weaknesses, while Lizzie confronts new demons and old curses."><span class="idx">18</span><h3>Old Curses</h3><p class="meta"><span>The White Princess</span><span class="yr">1499</span></p></article>
+<article class="box" data-n="19" data-desc="Catherine of Aragon arrives in England to wed Prince Arthur, heir to the English throne, in a marriage contract intended to forge an alliance between the two nations."><span class="idx">19</span><h3>The New World</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1501</span></p></article>
+<article class="box" data-n="20" data-desc="Catherine is one step closer to the English throne with her marriage to Arthur but must navigate the challenges of a new relationship and a new court."><span class="idx">20</span><h3>Fever Dream</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1501–1502</span></p></article>
+<article class="box" data-n="21" data-desc="Catherine remains determined to become England's future Queen and makes plans to marry Prince Harry. Lizzie has a troubling premonition following a complicated labor."><span class="idx">21</span><h3>An Audacious Plan</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1502–1503</span></p></article>
+<article class="box" data-n="22" data-desc="As the nation mourns Lizzie's passing and Catherine works to secure her marriage to Harry, Henry shocks the family by announcing his intention to honor his wife's dying wish."><span class="idx">22</span><h3>The Battle for Harry</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1503</span></p></article>
+<article class="box" data-n="23" data-desc="Catherine is faced with a dilemma - marry King Henry Tudor and immediately become Queen of England - or find a way to refuse and hold out for Harry."><span class="idx">23</span><h3>Heart Versus Duty</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1503–1505</span></p></article>
+<article class="box" data-n="24" data-desc="The English throne seems within Catherine's reach, but an unfortunate twist of fate means that her future now lies in the hands of her unstable older sister."><span class="idx">24</span><h3>A Polite Kidnapping</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1506</span></p></article>
+<article class="box" data-n="25" data-desc="The whole country is suffering - Catherine is barely recognizable as the 'Spanish Princess' and Maggie is destitute, but Catherine is determined not to abandon her destiny."><span class="idx">25</span><h3>All Is Lost</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1507–1508</span></p></article>
+<article class="box" data-n="26" data-desc="The fate of England hangs in the balance when the Tudor family is rocked by tragedy. Catherine risks everything to find out if Harry still loves her."><span class="idx">26</span><h3>Destiny</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1509</span></p></article>
+<article class="box" data-n="27" data-desc="With a powerful alliance with Spain and an heir in the crib, what could go wrong with the glamorous royal couple Catherine and Henry?"><span class="idx">27</span><h3>Camelot</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1510–1511</span></p></article>
+<article class="box" data-n="28" data-desc="Henry invades France, leaving a pregnant Catherine to defend England from the Scottish King James IV. Let the Battle of Flodden start..."><span class="idx">28</span><h3>Flodden</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1513</span></p></article>
+<article class="box" data-n="29" data-desc="While Catherine fights to restore her marriage after another tragedy, Meg too must find a way to restore Scotland after the bloody Battle of Flodden."><span class="idx">29</span><h3>Grief</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1513–1514</span></p></article>
+<article class="box" data-n="30" data-desc="While Meg risks all for love, Catherine struggles with the nauseating possibility Henry is cheating on her."><span class="idx">30</span><h3>The Other Woman</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1514–1515</span></p></article>
+<article class="box" data-n="31" data-desc="When the plague hits London, the court flees to Hampton Court, but Maggie and Thomas More remain in an empty and surprisingly romantic palace."><span class="idx">31</span><h3>Plague</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1517–1518</span></p></article>
+<article class="box" data-n="32" data-desc="A great gathering in France is the backdrop to a political stand-off between Catherine and Wolsey, while in London, riots happen."><span class="idx">32</span><h3>Field of Cloth of Gold</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1520</span></p></article>
+<article class="box" data-n="33" data-desc="A new religion is rising, as is tension in court. Catherine must stop Henry's dangerous paranoia from turning friends into enemies."><span class="idx">33</span><h3>Faith</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1521</span></p></article>
+<article class="box" data-n="34" data-desc="As Henry loses himself to madness, the stakes have never been higher for Catherine. Her husband has become a threat to her life."><span class="idx">34</span><h3>Peace</h3><p class="meta"><span>The Spanish Princess</span><span class="yr">1521–1524</span></p></article>
+<article class="box" data-n="35" data-desc="A sumptuous and sensual tale of intrigue, romance and betrayal set against the backdrop of a defining moment in European history: two beautiful sisters, Anne and Mary Boleyn, driven by their family's blind ambition, compete for the love of the handsome and passionate King Henry VIII."><span class="idx">35</span><h3>The Other Boleyn Girl</h3><p class="meta"><span>feature film</span><span class="yr">1521–1536 · set</span></p></article></div></div>
+  <svg id="wires" aria-hidden="true"></svg>
+</div>
+
+<section class="tablewrap">
+  <h2>Every link, and every part that has none</h2>
+  <p class="sub">The same data as the diagram. A link exists wherever the two bracketed
+  year&#8209;spans overlap; the event column is filled only where a well&#8209;attested event falls
+  inside that overlap.</p>
+  <table>
+    <thead><tr><th>Overlap</th><th>BBC2 Tudor Trilogy</th><th>Philippa Gregory</th><th>What they share</th></tr></thead>
+    <tbody>
+<tr><td class="y">1485</td><td>1. Crown in Jeopardy</td><td>10. The Final Battle</td><td class="ev"><strong>Bosworth Field</strong>, 1485. Richard III falls. The White Queen ends here; the BBC trilogy opens here.</td></tr>
+<tr><td class="y">1485</td><td>1. Crown in Jeopardy</td><td>11. In Bed with the Enemy</td><td class="ev none">—</td></tr>
+<tr><td class="y">1486</td><td>2. Power in the Land</td><td>11. In Bed with the Enemy</td><td class="ev"><strong>Henry VII marries Elizabeth of York</strong>, 1486. 18 January 1486 - the union the whole Tudor claim rests on.</td></tr>
+<tr><td class="y">1486</td><td>2. Power in the Land</td><td>12. Hearts and Minds</td><td class="ev none">—</td></tr>
+<tr><td class="y">1486</td><td>2. Power in the Land</td><td>13. Burgundy</td><td class="ev none">—</td></tr>
+<tr><td class="y">1486</td><td>3. The Schooling of Apes</td><td>11. In Bed with the Enemy</td><td class="ev none">—</td></tr>
+<tr><td class="y">1486</td><td>3. The Schooling of Apes</td><td>12. Hearts and Minds</td><td class="ev none">—</td></tr>
+<tr><td class="y">1486–1487</td><td>3. The Schooling of Apes</td><td>13. Burgundy</td><td class="ev none">—</td></tr>
+<tr><td class="y">1487</td><td>3. The Schooling of Apes</td><td>14. The Pretender</td><td class="ev none">—</td></tr>
+<tr><td class="y">1487</td><td>4. The Crowning of Apes</td><td>13. Burgundy</td><td class="ev none">—</td></tr>
+<tr><td class="y">1487</td><td>4. The Crowning of Apes</td><td>14. The Pretender</td><td class="ev"><strong>Lambert Simnel crowned in Dublin</strong>, 1487. 24 May 1487, and Stoke Field three weeks later.</td></tr>
+<tr><td class="y">1495</td><td>6. The White Hart</td><td>16. English Blood on English Soil</td><td class="ev none">—</td></tr>
+<tr><td class="y">1495–1497</td><td>10. The Man Who Never Was</td><td>16. English Blood on English Soil</td><td class="ev"><strong>Perkin Warbeck</strong>, 1497. The Man Who Never Was - both series spend their middle on him.</td></tr>
+<tr><td class="y">1496</td><td>7. A Fly in the Ointment</td><td>16. English Blood on English Soil</td><td class="ev none">—</td></tr>
+<tr><td class="y">1496–1497</td><td>8. The Princely Gift</td><td>16. English Blood on English Soil</td><td class="ev none">—</td></tr>
+<tr><td class="y">1497</td><td>8. The Princely Gift</td><td>17. Two Kings</td><td class="ev none">—</td></tr>
+<tr><td class="y">1497</td><td>9. Do the Sheep Sin?</td><td>16. English Blood on English Soil</td><td class="ev"><strong>the Cornish rising</strong>, 1497. Blackheath, 17 June 1497.</td></tr>
+<tr><td class="y">1497</td><td>9. Do the Sheep Sin?</td><td>17. Two Kings</td><td class="ev none">—</td></tr>
+<tr><td class="y">1497</td><td>10. The Man Who Never Was</td><td>17. Two Kings</td><td class="ev none">—</td></tr>
+<tr><td class="y">1498</td><td>11. The Strange Shapes of Reality</td><td>17. Two Kings</td><td class="ev none">—</td></tr>
+<tr><td class="y">1499</td><td>12. The Fledgling</td><td>18. Old Curses</td><td class="ev"><strong>Warbeck and Warwick executed</strong>, 1499. November 1499. The last Yorkist claimants.</td></tr>
+<tr><td class="y">1501</td><td>13. The King Without a Face</td><td>19. The New World</td><td class="ev"><strong>Catherine of Aragon marries Arthur</strong>, 1501. 14 November 1501, five months before Arthur dies.</td></tr>
+<tr><td class="y">1501</td><td>13. The King Without a Face</td><td>20. Fever Dream</td><td class="ev none">—</td></tr>
+<tr><td class="y">1501</td><td>14. Catherine of Aragon</td><td>19. The New World</td><td class="ev none">—</td></tr>
+<tr><td class="y">1501–1502</td><td>14. Catherine of Aragon</td><td>20. Fever Dream</td><td class="ev"><strong>Arthur dies at Ludlow</strong>, 1502. 2 April 1502.</td></tr>
+<tr><td class="y">1502–1503</td><td>14. Catherine of Aragon</td><td>21. An Audacious Plan</td><td class="ev none">—</td></tr>
+<tr><td class="y">1503</td><td>14. Catherine of Aragon</td><td>22. The Battle for Harry</td><td class="ev none">—</td></tr>
+<tr><td class="y">1503–1505</td><td>14. Catherine of Aragon</td><td>23. Heart Versus Duty</td><td class="ev none">—</td></tr>
+<tr><td class="y">1506</td><td>14. Catherine of Aragon</td><td>24. A Polite Kidnapping</td><td class="ev none">—</td></tr>
+<tr><td class="y">1507–1508</td><td>14. Catherine of Aragon</td><td>25. All Is Lost</td><td class="ev none">—</td></tr>
+<tr><td class="y">1509</td><td>14. Catherine of Aragon</td><td>26. Destiny</td><td class="ev"><strong>Henry VIII accedes and marries Catherine</strong>, 1509. June 1509.</td></tr>
+<tr><td class="y">1510–1511</td><td>14. Catherine of Aragon</td><td>27. Camelot</td><td class="ev none">—</td></tr>
+<tr><td class="y">1513</td><td>14. Catherine of Aragon</td><td>28. Flodden</td><td class="ev"><strong>Flodden</strong>, 1513. 9 September 1513, with Catherine regent.</td></tr>
+<tr><td class="y">1513–1514</td><td>14. Catherine of Aragon</td><td>29. Grief</td><td class="ev none">—</td></tr>
+<tr><td class="y">1514–1515</td><td>14. Catherine of Aragon</td><td>30. The Other Woman</td><td class="ev none">—</td></tr>
+<tr><td class="y">1517–1518</td><td>14. Catherine of Aragon</td><td>31. Plague</td><td class="ev none">—</td></tr>
+<tr><td class="y">1520</td><td>14. Catherine of Aragon</td><td>32. Field of Cloth of Gold</td><td class="ev"><strong>the Field of the Cloth of Gold</strong>, 1520. June 1520.</td></tr>
+<tr><td class="y">1521</td><td>14. Catherine of Aragon</td><td>33. Faith</td><td class="ev none">—</td></tr>
+<tr><td class="y">1521–1524</td><td>14. Catherine of Aragon</td><td>34. Peace</td><td class="ev none">—</td></tr>
+<tr><td class="y">1521–1536</td><td>14. Catherine of Aragon</td><td>35. The Other Boleyn Girl</td><td class="ev none">—</td></tr>
+<tr><td class="y">1533–1536</td><td>15. Anne Boleyn</td><td>35. The Other Boleyn Girl</td><td class="ev"><strong>Anne Boleyn</strong>, 1536. The Other Boleyn Girl is Mary's version of the same rise.</td></tr>
+<tr><td class="y">1536</td><td>16. Jane Seymour</td><td>35. The Other Boleyn Girl</td><td class="ev"><strong>Anne Boleyn executed</strong>, 1536. 19 May 1536; Jane Seymour married eleven days later.</td></tr>
+<tr class="un"><td class="y">—</td><td colspan="2">5. The Serpent and the Comforter <span style="color:var(--muted)">· The Shadow of the Tower</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1539–1540</td><td colspan="2">17. Anne of Cleves <span style="color:var(--muted)">· The Six Wives of Henry VIII</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1540–1542</td><td colspan="2">18. Catherine Howard <span style="color:var(--muted)">· The Six Wives of Henry VIII</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1543–1547</td><td colspan="2">19. Catherine Parr <span style="color:var(--muted)">· The Six Wives of Henry VIII</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1549–1558</td><td colspan="2">20. The Lion's Cub <span style="color:var(--muted)">· Elizabeth R</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1559–1564</td><td colspan="2">21. The Marriage Game <span style="color:var(--muted)">· Elizabeth R</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1579–1582</td><td colspan="2">22. Shadow in the Sun <span style="color:var(--muted)">· Elizabeth R</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1561–1587</td><td colspan="2">23. Mary, Queen of Scots <span style="color:var(--muted)">· feature film</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1586–1587</td><td colspan="2">24. Horrible Conspiracies <span style="color:var(--muted)">· Elizabeth R</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1587–1588</td><td colspan="2">25. The Enterprise of England <span style="color:var(--muted)">· Elizabeth R</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1596–1603</td><td colspan="2">26. Sweet England's Pride <span style="color:var(--muted)">· Elizabeth R</span></td><td class="ev none">no counterpart on the right</td></tr>
+<tr class="un"><td class="y">1464</td><td colspan="2">1. In Love with the King <span style="color:var(--muted)">· The White Queen</span></td><td class="ev none">no counterpart on the left</td></tr>
+<tr class="un"><td class="y">1465–1469</td><td colspan="2">2. The Price of Power <span style="color:var(--muted)">· The White Queen</span></td><td class="ev none">no counterpart on the left</td></tr>
+<tr class="un"><td class="y">1469–1470</td><td colspan="2">3. The Storm <span style="color:var(--muted)">· The White Queen</span></td><td class="ev none">no counterpart on the left</td></tr>
+<tr class="un"><td class="y">1470</td><td colspan="2">4. The Bad Queen <span style="color:var(--muted)">· The White Queen</span></td><td class="ev none">no counterpart on the left</td></tr>
+<tr class="un"><td class="y">1470–1471</td><td colspan="2">5. War at First Hand <span style="color:var(--muted)">· The White Queen</span></td><td class="ev none">no counterpart on the left</td></tr>
+<tr class="un"><td class="y">1471–1472</td><td colspan="2">6. Love and Marriage <span style="color:var(--muted)">· The White Queen</span></td><td class="ev none">no counterpart on the left</td></tr>
+<tr class="un"><td class="y">1477–1478</td><td colspan="2">7. Poison and Malmsey Wine <span style="color:var(--muted)">· The White Queen</span></td><td class="ev none">no counterpart on the left</td></tr>
+<tr class="un"><td class="y">1483</td><td colspan="2">8. The King is Dead <span style="color:var(--muted)">· The White Queen</span></td><td class="ev none">no counterpart on the left</td></tr>
+<tr class="un"><td class="y">1483</td><td colspan="2">9. The Princes in the Tower <span style="color:var(--muted)">· The White Queen</span></td><td class="ev none">no counterpart on the left</td></tr>
+<tr class="un"><td class="y">1491–1492</td><td colspan="2">15. Traitors <span style="color:var(--muted)">· The White Princess</span></td><td class="ev none">no counterpart on the left</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="notes">
+  <h2>How the links were made</h2>
+  <p>Every episode title in both playlists carries a bracketed year&#8209;span, worked out from
+  the episode descriptions rather than from any year spoken on screen &mdash; these shows almost
+  never say a date aloud. <span class="flag">A link is drawn wherever two spans overlap.</span>
+  That is arithmetic, not judgement, which is why there are 42 of them.</p>
+  <p><span class="flag">An event name is editorial; a year is derived.</span> Thirteen links carry
+  the name of something that actually happens inside the overlap window. The build refuses to
+  attach an event whose date falls outside the overlap &mdash; which caught one on the first run:
+  Henry VII&rsquo;s marriage to Elizabeth of York is January 1486, so it cannot hang on
+  <em>Crown in Jeopardy</em>, bracketed 1485. It moved to <em>Power in the Land</em>.</p>
+  <p><span class="flag">The two features carry no bracket</span>, so their spans are written by
+  hand &mdash; <em>Mary, Queen of Scots</em> 1561&ndash;87 and <em>The Other Boleyn Girl</em>
+  1521&ndash;36 &mdash; and are marked <code>set</code> in the diagram rather than passed off as
+  derived.</p>
+  <p><span class="flag">Height is running order, not a time axis.</span> Each column is simply
+  its playlist, top to bottom, so the vertical gap between two boxes is a count of episodes and
+  not a number of years. Aligning the columns on one shared date was tried and rejected: the two
+  tell their years at such different speeds that matching them at Bosworth only moves the
+  distortion to the 1520s. Nothing may be read straight across the page &mdash; a link is the
+  only claim of a shared year, and the centre channel is the only place time runs evenly.</p>
+
+  <h2>What the shape shows</h2>
+  <p><span class="flag">One episode carries seventeen.</span> <em>The Six Wives of Henry VIII</em>
+  gives Catherine of Aragon a single 90&#8209;minute play bracketed 1501&ndash;1536; Gregory spends
+  seventeen episodes on the same years. The fan spreading from that one box is the whole
+  difference between the two projects &mdash; one compresses a life into an evening, the other
+  dilates it across two series.</p>
+  <p><span class="flag">The tails never meet.</span> Gregory&rsquo;s first nine parts run
+  1464&ndash;1483, before the BBC trilogy opens; the BBC&rsquo;s last ten run 1539&ndash;1603,
+  after Gregory stops. Bosworth is the hinge: <em>The White Queen</em> ends there and
+  <em>The Shadow of the Tower</em> begins there, which is why the top&#8209;left link is the
+  only place the two collections touch end to end.</p>
+  <p><span class="flag">There is a hole in the middle of the BBC trilogy.</span>
+  <em>Traitors</em> (1491&ndash;92) is the one Gregory episode inside the shared window with no
+  counterpart at all: the BBC jumps from 1487 straight to 1494, so Perkin Warbeck&rsquo;s first
+  appearance in Cork happens off&#8209;screen on the left.</p>
+  <p style="color:var(--muted);font-size:.85rem">Built 2026-10-09 from the two Jellyfin playlists by
+  <code>dataviz/build-tudor-crosswalk.py</code>. Colours validated for colour&#8209;vision
+  deficiency in both light and dark mode.</p>
+</section>
+
+</div>
+<div class="tip" id="tip" role="tooltip" aria-hidden="true">
+  <h4></h4><p class="tm"></p><p class="td"></p>
+</div>
+<script type="application/json" id="data">{"links": [{"l": 1, "r": 10, "lo": 1485, "hi": 1485, "label": "Bosworth Field", "year": 1485}, {"l": 1, "r": 11, "lo": 1485, "hi": 1485, "label": null, "year": null}, {"l": 2, "r": 11, "lo": 1486, "hi": 1486, "label": "Henry VII marries Elizabeth of York", "year": 1486}, {"l": 2, "r": 12, "lo": 1486, "hi": 1486, "label": null, "year": null}, {"l": 2, "r": 13, "lo": 1486, "hi": 1486, "label": null, "year": null}, {"l": 3, "r": 11, "lo": 1486, "hi": 1486, "label": null, "year": null}, {"l": 3, "r": 12, "lo": 1486, "hi": 1486, "label": null, "year": null}, {"l": 3, "r": 13, "lo": 1486, "hi": 1487, "label": null, "year": null}, {"l": 3, "r": 14, "lo": 1487, "hi": 1487, "label": null, "year": null}, {"l": 4, "r": 13, "lo": 1487, "hi": 1487, "label": null, "year": null}, {"l": 4, "r": 14, "lo": 1487, "hi": 1487, "label": "Lambert Simnel crowned in Dublin", "year": 1487}, {"l": 6, "r": 16, "lo": 1495, "hi": 1495, "label": null, "year": null}, {"l": 7, "r": 16, "lo": 1496, "hi": 1496, "label": null, "year": null}, {"l": 8, "r": 16, "lo": 1496, "hi": 1497, "label": null, "year": null}, {"l": 8, "r": 17, "lo": 1497, "hi": 1497, "label": null, "year": null}, {"l": 9, "r": 16, "lo": 1497, "hi": 1497, "label": "the Cornish rising", "year": 1497}, {"l": 9, "r": 17, "lo": 1497, "hi": 1497, "label": null, "year": null}, {"l": 10, "r": 16, "lo": 1495, "hi": 1497, "label": "Perkin Warbeck", "year": 1497}, {"l": 10, "r": 17, "lo": 1497, "hi": 1497, "label": null, "year": null}, {"l": 11, "r": 17, "lo": 1498, "hi": 1498, "label": null, "year": null}, {"l": 12, "r": 18, "lo": 1499, "hi": 1499, "label": "Warbeck and Warwick executed", "year": 1499}, {"l": 13, "r": 19, "lo": 1501, "hi": 1501, "label": "Catherine of Aragon marries Arthur", "year": 1501}, {"l": 13, "r": 20, "lo": 1501, "hi": 1501, "label": null, "year": null}, {"l": 14, "r": 19, "lo": 1501, "hi": 1501, "label": null, "year": null}, {"l": 14, "r": 20, "lo": 1501, "hi": 1502, "label": "Arthur dies at Ludlow", "year": 1502}, {"l": 14, "r": 21, "lo": 1502, "hi": 1503, "label": null, "year": null}, {"l": 14, "r": 22, "lo": 1503, "hi": 1503, "label": null, "year": null}, {"l": 14, "r": 23, "lo": 1503, "hi": 1505, "label": null, "year": null}, {"l": 14, "r": 24, "lo": 1506, "hi": 1506, "label": null, "year": null}, {"l": 14, "r": 25, "lo": 1507, "hi": 1508, "label": null, "year": null}, {"l": 14, "r": 26, "lo": 1509, "hi": 1509, "label": "Henry VIII accedes and marries Catherine", "year": 1509}, {"l": 14, "r": 27, "lo": 1510, "hi": 1511, "label": null, "year": null}, {"l": 14, "r": 28, "lo": 1513, "hi": 1513, "label": "Flodden", "year": 1513}, {"l": 14, "r": 29, "lo": 1513, "hi": 1514, "label": null, "year": null}, {"l": 14, "r": 30, "lo": 1514, "hi": 1515, "label": null, "year": null}, {"l": 14, "r": 31, "lo": 1517, "hi": 1518, "label": null, "year": null}, {"l": 14, "r": 32, "lo": 1520, "hi": 1520, "label": "the Field of the Cloth of Gold", "year": 1520}, {"l": 14, "r": 33, "lo": 1521, "hi": 1521, "label": null, "year": null}, {"l": 14, "r": 34, "lo": 1521, "hi": 1524, "label": null, "year": null}, {"l": 14, "r": 35, "lo": 1521, "hi": 1536, "label": null, "year": null}, {"l": 15, "r": 35, "lo": 1533, "hi": 1536, "label": "Anne Boleyn", "year": 1536}, {"l": 16, "r": 35, "lo": 1536, "hi": 1536, "label": "Anne Boleyn executed", "year": 1536}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const cross = document.getElementById('cross'), svg = document.getElementById('wires');
+const NS = 'http://www.w3.org/2000/svg';
+const reels = {L:document.querySelector('.col.L .reel'), R:document.querySelector('.col.R .reel')};
+const boxes = {L:{}, R:{}};
+document.querySelectorAll('.col.L .box').forEach(b=>boxes.L[+b.dataset.n]=b);
+document.querySelectorAll('.col.R .box').forEach(b=>boxes.R[+b.dataset.n]=b);
+const SLOW = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// current reel offsets, in px. restY() subtracts these so a measurement taken
+// mid-slide still reports where the box LIVES, not where it is drawn.
+const off = {L:0, R:0};
+let focused = null;                       // {side, n} or null
+const wires = new Map(), pills = new Map();   // key -> element, built once
+
+function key(l){ return l.l+'-'+l.r }
+function crossRect(){ return cross.getBoundingClientRect() }
+function restY(side, n){
+  const r = boxes[side][n].getBoundingClientRect(), cb = crossRect();
+  return r.top - cb.top + r.height/2 - off[side];
+}
+function edgeX(side, n){
+  const r = boxes[side][n].getBoundingClientRect(), cb = crossRect();
+  return (side==='L' ? r.right : r.left) - cb.left;
+}
+function linksOf(side, n){
+  return D.links.filter(l => side==='L' ? l.l===n : l.r===n);
+}
+
+function mount(){
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  wires.clear(); pills.clear();
+  const rail = document.createElementNS(NS,'line');
+  rail.setAttribute('class','rail'); rail.id='rail'; svg.appendChild(rail);
+  for (const l of D.links){
+    const path = document.createElementNS(NS,'path');
+    path.setAttribute('class','wire'+(l.label?' ev':''));
+    svg.appendChild(path); wires.set(key(l), path);
+  }
+  for (const l of D.links){
+    const g = document.createElementNS(NS,'g');
+    g.setAttribute('class','labg'+(l.label?'':' yearonly'));
+    const bg = document.createElementNS(NS,'rect'); bg.setAttribute('class','labbg');
+    const tx = document.createElementNS(NS,'text');
+    tx.setAttribute('class','lab'); tx.setAttribute('text-anchor','middle');
+    tx.textContent = l.label ? (l.label + '  ' + l.year)
+                             : (l.lo===l.hi ? String(l.lo) : l.lo+'–'+l.hi);
+    g.appendChild(bg); g.appendChild(tx); svg.appendChild(g);
+    pills.set(key(l), {g, bg, tx, w:0, h:0});
+  }
+  // measure each pill ONCE - getBBox forces layout and must not run per frame
+  const cb = crossRect();
+  for (const [k,p] of pills){
+    p.tx.setAttribute('x', cb.width/2); p.tx.setAttribute('y', 0);
+    const bb = p.tx.getBBox(); p.w = bb.width; p.h = bb.height;
+    p.bg.setAttribute('x', cb.width/2 - p.w/2 - 8); p.bg.setAttribute('y', -p.h + 1);
+    p.bg.setAttribute('width', p.w + 16); p.bg.setAttribute('height', p.h + 8);
+    p.tx.setAttribute('y', 4);
+  }
+}
+
+function layout(){
+  const cb = crossRect();
+  if (cb.width < 520) return;
+  svg.setAttribute('viewBox', '0 0 '+cb.width+' '+cb.height);
+  const mid = cb.width/2;
+  // which pills are visible right now: at rest the named events (plus years if asked
+  // for); while focused, only the links belonging to the hovered box. Stacking the
+  // visible set only is what keeps the focused view calm instead of a wall of labels.
+  const showYears = cross.classList.contains('showall');
+  const lit = focused ? new Set(linksOf(focused.side, focused.n).map(key)) : null;
+  const vis = D.links.filter(l => lit ? lit.has(key(l)) : (l.label || showYears));
+  const slots = vis.map(l => ({l, y:(restY('L',l.l)+off.L + restY('R',l.r)+off.R)/2}))
+                   .sort((a,b)=>a.y-b.y);
+  const H = 26;
+  for (let i=1;i<slots.length;i++) if (slots[i].y - slots[i-1].y < H) slots[i].y = slots[i-1].y + H;
+  if (slots.length){
+    const over = slots[slots.length-1].y - (cb.height - 14);
+    if (over > 0) slots.forEach(s => s.y -= over);
+    const under = 14 - slots[0].y;
+    if (under > 0) slots.forEach(s => s.y += under);
+  }
+  const slotY = new Map(slots.map(s => [key(s.l), s.y]));
+
+  for (const l of D.links){
+    const k = key(l);
+    const ax = edgeX('L', l.l), ay = restY('L', l.l) + off.L;
+    const bx = edgeX('R', l.r), by = restY('R', l.r) + off.R;
+    const my = slotY.has(k) ? slotY.get(k) : (ay+by)/2;
+    wires.get(k).setAttribute('d',
+      'M'+ax+','+ay+' C'+(ax+70)+','+ay+' '+(mid-70)+','+my+' '+mid+','+my+
+      ' C'+(mid+70)+','+my+' '+(bx-70)+','+by+' '+bx+','+by);
+    const p = pills.get(k);
+    p.g.setAttribute('transform', 'translate(0,'+my+')');
+    p.g.style.display = slotY.has(k) ? '' : 'none';
+  }
+  const rail = document.getElementById('rail');
+  if (slots.length > 1){
+    rail.setAttribute('x1', mid); rail.setAttribute('x2', mid);
+    rail.setAttribute('y1', slots[0].y-16); rail.setAttribute('y2', slots[slots.length-1].y+16);
+    rail.style.display = focused ? 'none' : '';
+  } else rail.style.display = 'none';
+}
+
+// ---- the reel ----------------------------------------------------------------
+// Hovering a cell slides the OPPOSITE column until its matches come level, so the
+// links go horizontal and the row can honestly be read straight across. A box with
+// several matches centres the block; one with none leaves the reel where it is.
+let anim = null;
+function glide(target){
+  if (anim) cancelAnimationFrame(anim);
+  const from = {L:off.L, R:off.R};
+  if (SLOW){ off.L = target.L; off.R = target.R; apply(); layout(); return; }
+  const t0 = performance.now(), DUR = 460;
+  const ease = x => 1 - Math.pow(1-x, 3);
+  (function step(now){
+    const k = Math.min(1, (now-t0)/DUR), e = ease(k);
+    off.L = from.L + (target.L-from.L)*e;
+    off.R = from.R + (target.R-from.R)*e;
+    apply(); layout();
+    if (k < 1) anim = requestAnimationFrame(step); else anim = null;
+  })(performance.now());
+}
+function apply(){
+  reels.L.style.transform = 'translateY('+off.L.toFixed(2)+'px)';
+  reels.R.style.transform = 'translateY('+off.R.toFixed(2)+'px)';
+}
+
+const tip = document.getElementById('tip');
+function showTip(side, n){
+  // ⭐ anchored to the HOVERED box, never the cursor: only the opposite reel moves, so
+  // this box is the one thing on screen guaranteed to stay put while the glide runs.
+  const b = boxes[side][n];
+  tip.className = 'tip ' + side;
+  tip.querySelector('h4').textContent = b.querySelector('h3').textContent;
+  tip.querySelector('.tm').innerHTML = b.querySelector('.meta').innerHTML;
+  tip.querySelector('.td').textContent = b.dataset.desc || '';
+  tip.setAttribute('aria-hidden','false');
+  const r = b.getBoundingClientRect(), vw = innerWidth, vh = innerHeight;
+  tip.classList.add('show');
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let x = side==='L' ? r.right + 14 : r.left - tw - 14;
+  if (x < 12) x = r.right + 14;
+  if (x + tw > vw - 12) x = Math.max(12, r.left - tw - 14);
+  let y = r.top + r.height/2 - th/2;
+  y = Math.max(12, Math.min(vh - th - 12, y));
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+function hideTip(){ tip.classList.remove('show'); tip.setAttribute('aria-hidden','true'); }
+
+function spotlight(side, n){
+  const ls = linksOf(side, n);
+  showTip(side, n);
+  focused = {side, n};
+  cross.classList.add('focus');
+  document.querySelectorAll('.box').forEach(b=>b.classList.remove('on'));
+  wires.forEach(w=>w.classList.remove('lit'));
+  pills.forEach(p=>p.g.classList.remove('lit'));
+  boxes[side][n].classList.add('on');
+  for (const l of ls){
+    boxes.L[l.l].classList.add('on'); boxes.R[l.r].classList.add('on');
+    wires.get(key(l)).classList.add('lit');
+    pills.get(key(l)).g.classList.add('lit');
+  }
+  const other = side==='L' ? 'R' : 'L';
+  const t = {L:off.L, R:off.R};
+  if (ls.length){
+    const ys = ls.map(l => restY(other, other==='L' ? l.l : l.r));
+    t[other] = (restY(side, n) + off[side]) - (Math.min(...ys)+Math.max(...ys))/2;
+    const cb = crossRect();
+    t[other] = Math.max(-cb.height*0.8, Math.min(cb.height*0.8, t[other]));
+  }
+  glide(t);
+}
+function restAll(){
+  focused = null;
+  hideTip();
+  cross.classList.remove('focus');
+  document.querySelectorAll('.box').forEach(b=>b.classList.remove('on'));
+  wires.forEach(w=>w.classList.remove('lit'));
+  pills.forEach(p=>p.g.classList.remove('lit'));
+  glide({L:0, R:0});
+}
+
+document.querySelectorAll('.box').forEach(b=>{
+  const side = b.closest('.col').classList.contains('L') ? 'L' : 'R';
+  const go = ()=>spotlight(side, +b.dataset.n);
+  b.addEventListener('mouseenter', go);
+  b.addEventListener('focus', go);
+  b.setAttribute('tabindex','0');
+});
+cross.addEventListener('mouseleave', restAll);
+document.getElementById('showall').addEventListener('click', function(){
+  const on = cross.classList.toggle('showall');
+  this.setAttribute('aria-pressed', on);
+  this.textContent = on ? 'Every link labelled' : 'Named events only';
+  layout();
+});
+function remount(){
+  // rebuild, then put back whatever the user was pointing at - a remount that forgets
+  // the hover is why the labels went dim when the webfonts finished loading.
+  mount(); layout();
+  if (focused) spotlight(focused.side, focused.n);
+}
+addEventListener('resize', ()=>{ hideTip(); off.L=off.R=0; apply(); remount(); });
+addEventListener('scroll', ()=>{ if (focused) showTip(focused.side, focused.n); }, {passive:true});
+mount(); layout();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(remount);
+</script>
+</body></html>
