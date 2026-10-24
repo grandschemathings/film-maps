@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work on Film</title>
+<meta name="description" content="Four phases of the workplace film, tested against a history film collection — and the three controlled pairs that carry the argument.">
+<style>
+  :root {
+    --bg: #fbfaf8; --panel: #ffffff; --ink: #1c1a17; --muted: #6b645c;
+    --rule: #e4ded5; --accent: #8a5a2b;
+    --labour: #8a5a2b; --capital: #35688f;
+    --shadow: 0 1px 2px rgba(28,26,23,.05), 0 8px 24px rgba(28,26,23,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #171614; --panel: #211f1c; --ink: #ece7e0; --muted: #a49c92;
+      --rule: #322e29; --accent: #d8a56b;
+      --labour: #d8a56b; --capital: #7fb0d8;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #171614; --panel: #211f1c; --ink: #ece7e0; --muted: #a49c92;
+    --rule: #322e29; --accent: #d8a56b;
+    --labour: #d8a56b; --capital: #7fb0d8;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.6 Georgia,"Iowan Old Style","Times New Roman",serif; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:860px; margin:0 auto; padding:72px 16px 96px; }
+  header.top { border-bottom:1px solid var(--rule); padding-bottom:28px; margin-bottom:40px; }
+  h1 { font-size:clamp(1.9rem,5vw,2.6rem); margin:0 0 .4em; letter-spacing:-.01em; }
+  .sub { color:var(--muted); margin:0 0 1.2em; }
+  .stats { display:flex; flex-wrap:wrap; gap:10px; }
+  .stat { background:var(--panel); border:1px solid var(--rule); border-radius:6px;
+    padding:.35em .7em; font-size:.85rem; color:var(--muted); box-shadow:var(--shadow); }
+  .stat b { color:var(--ink); }
+  h2 { font-size:1.45rem; margin:2.6em 0 .2em; letter-spacing:-.01em; }
+  h2 .n { color:var(--accent); font-size:.8em; margin-right:.4em; }
+  h3 { font-size:1.08rem; margin:1.8em 0 .3em; }
+  p { margin:.7em 0; }
+  .lead { color:var(--muted); margin-top:.2em; }
+  .panel { background:var(--panel); border:1px solid var(--rule); border-radius:10px;
+    padding:20px 22px; box-shadow:var(--shadow); margin:1.4em 0; }
+  .panel.flag { border-left:3px solid var(--accent); }
+  table { border-collapse:collapse; width:100%; margin:1em 0; font-size:.94rem; }
+  th,td { text-align:left; padding:.5em .6em; border-bottom:1px solid var(--rule); vertical-align:top; }
+  th { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:normal; }
+  td.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .yr { color:var(--muted); font-variant-numeric:tabular-nums; }
+  figure { margin:1.6em 0; }
+  figcaption { color:var(--muted); font-size:.88rem; margin-top:.8em; }
+  .legend { display:flex; gap:18px; margin:.2em 0 1em; font-size:.88rem; }
+  .key { display:inline-flex; align-items:center; gap:.45em; }
+  .sw { width:11px; height:11px; border-radius:2px; display:inline-block; }
+  .sw.l { background:var(--labour); } .sw.c { background:var(--capital); }
+  .chart { display:grid; grid-template-columns:4.4em 1fr; gap:.3em 1em; align-items:center; }
+  .chart .dec { color:var(--muted); font-size:.88rem; font-variant-numeric:tabular-nums; }
+  .bars { display:flex; flex-direction:column; gap:3px; }
+  .row { display:flex; align-items:center; gap:.5em; }
+  .bar { height:11px; border-radius:0 3px 3px 0; min-width:2px; }
+  .bar.l { background:var(--labour); } .bar.c { background:var(--capital); }
+  .val { font-size:.78rem; color:var(--muted); font-variant-numeric:tabular-nums; }
+  ul { padding-left:1.1em; } li { margin:.35em 0; }
+  .held { color:var(--accent); font-weight:bold; }
+  .want { color:var(--muted); }
+  code { font:.88em/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
+    background:var(--panel); border:1px solid var(--rule); border-radius:4px; padding:.1em .35em; }
+  footer { margin-top:4em; padding-top:24px; border-top:1px solid var(--rule);
+    color:var(--muted); font-size:.88rem; }
+  a { color:var(--accent); }
+  @media (max-width:560px){ .chart{grid-template-columns:3.6em 1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+<h1>Work on Film</h1>
+<p class="sub">A claim from a film forum: <em>films and shows were about workers until</em> Norma Rae<em>; new ones are all about bankers, managers and billionaires.</em> Tested against a private collection of 4,121 films and 267 series. ⭐ The claim is roughly right and its hinge is wrong — there are <strong>four phases, not two</strong>, and the worker does not vanish in 1979. He changes desks, and then the camera changes floors.</p>
+<div class="stats">
+  <span class="stat"><b>4,121</b> films</span>
+  <span class="stat"><b>267</b> series</span>
+  <span class="stat"><b>4</b> phases</span>
+  <span class="stat"><b>3</b> controlled pairs</span>
+  <span class="stat"><b>1</b> half-complete</span>
+</div>
+</header>
+
+<div class="panel flag">
+<p style="margin-top:0"><strong>What this collection can and cannot settle.</strong> It is a curated history library with a roughly 25-year subject rule and a 61% American tilt. It is <strong>not a sample of cinema</strong> and cannot test what gets made. It can test what is <em>in it</em> — and it can be surprised, which is the useful part. Every claim below names its denominator; where a finding could be an artefact of how the collection was built, it says so.</p>
+</div>
+
+<h2><span class="n">1</span>Four phases</h2>
+<p class="lead">Each phase believes in a different remedy. That is what actually changes.</p>
+
+<table>
+<tr><th>Phase</th><th>Window</th><th>What the film thinks can be done</th></tr>
+<tr><td><strong>Male industrial</strong></td><td class="yr">– 1978/80</td><td>organise; the union contract</td></tr>
+<tr><td><strong>Women at work</strong></td><td class="yr">1974 – 1988</td><td>the drive, then the lawsuit</td></tr>
+<tr><td><strong>White-collar &amp; service discontent</strong></td><td class="yr">1992 – 1999</td><td>⭐ <strong>nothing together</strong> — quit, break down, embezzle</td></tr>
+<tr><td><strong>Finance</strong></td><td class="yr">2000 –</td><td>the film is no longer about workers at all</td></tr>
+</table>
+
+<h3>Phase 1 ends with the plants, not with <em>Norma Rae</em></h3>
+<p><em>Blue Collar</em> (1978), <em>F.I.S.T.</em> (1978), <em>The Deer Hunter</em> (1978), <em>Harlan County U.S.A.</em> (1977). The collection's own 1970s peak — the highest labour rate of any decade — is overwhelmingly male and extractive: <em>Kes</em>, <em>The Molly Maguires</em>, <em>Joe Hill</em>, <em>Bound for Glory</em>, <em>Alambrista!</em>, <em>Days of Heaven</em>, <em>Breaking Away</em>.</p>
+
+<h3>Phase 2 belongs to a different movement</h3>
+<p><em>Norma Rae</em>, <em>9 to 5</em> and <em>Working Girl</em> are not in that cluster. They are downstream of women's liberation and the Equal Rights Amendment, which passed Congress in 1972, reached its deadline in <strong>March 1979</strong> and its extension in <strong>June 1982</strong>. <em>Norma Rae</em> is <strong>1979</strong>. <em>9 to 5</em> is <strong>1980</strong>. By <em>Working Girl</em> in <strong>1988</strong> the amendment has been dead six years and the film's resolution is a promotion.</p>
+<div class="panel">
+<p style="margin-top:0">⭐ <strong>And the collective drains out inside the phase.</strong></p>
+<ul style="margin-bottom:0">
+<li><em>Norma Rae</em> (1979) — a real union drive: ACTWU at J.P. Stevens, from Crystal Lee Sutton.</li>
+<li><em>9 to 5</em> (1980) — sex discrimination, via the 9to5 organisation of working women. <strong>Not a union.</strong></li>
+<li><em>Working Girl</em> (1988) — one woman gets a corner office. <strong>No collective at all.</strong></li>
+</ul>
+</div>
+<p>So <em>Working Girl</em> is already a capital film in sympathy — which is exactly why it pairs with <em>Money Never Sleeps</em> so cleanly.</p>
+
+<h3>Phase 3 is the one the instrument could not see</h3>
+<p>Found only because someone remembered <em>Office Space</em> (1999). It does not stand alone: the collection already holds three of its cohort — <em>Glengarry Glen Ross</em> (1992), <em>Falling Down</em> (1993), <em>Clerks</em> (1994) — and this accounts for a 1990s figure that otherwise made no sense, <strong>3.7 per 100, nearly the 1970s rate</strong>, which had been misread as a late labour revival.</p>
+<p>⛔ The keyword buckets missed it completely, because its vocabulary is <code>bad boss</code>, <code>downsizing</code>, <code>burnout</code>, <code>corporate world</code> — not <code>union</code> and <code>strike</code>. <strong>The hole in the instrument was exactly the width of the film that was remembered.</strong></p>
+
+<h3>Phase 4 is bigger than the films suggest</h3>
+<p>Finance-system keywords: <strong>2 films before 2000, 14 after.</strong> The <code>wall street</code> keyword is on <strong>8 films and all 8 are 2000 or later</strong>. The <em>kind</em> changes with the count — before 2000 a money film is about a rich <strong>man</strong> (<em>Citizen Kane</em>, <em>The Great Gatsby</em>, <em>The Thomas Crown Affair</em>); after, about a <strong>mechanism</strong>, with barely a protagonist.</p>
+<p>⭐ And nine capital-side <strong>series</strong>, every one released 2014 or later: <em>Halt and Catch Fire</em>, <em>McMafia</em>, <em>The Loudest Voice</em>, <em>Valley of the Boom</em>, <em>Industry</em>, <em>ZeroZeroZero</em>, <em>Super Pumped</em>, <em>Painkiller</em>, <em>Palm Royale</em>. <strong>Including television makes the shift sharper, not softer.</strong></p>
+
+<h2><span class="n">2</span>What the collection actually holds</h2>
+<p class="lead">Films per 100 of each release decade carrying a labour-side or capital-side keyword.</p>
+
+<figure>
+<div class="legend">
+  <span class="key"><span class="sw l"></span> labour-side</span>
+  <span class="key"><span class="sw c"></span> capital-side</span>
+</div>
+<div class="chart">
+  <div class="dec">1950s</div><div class="bars">
+    <div class="row"><div class="bar l" style="width:75.0%"></div><span class="val">3.9</span></div>
+    <div class="row"><div class="bar c" style="width:19.2%"></div><span class="val">1.0</span></div></div>
+  <div class="dec">1960s</div><div class="bars">
+    <div class="row"><div class="bar l" style="width:51.9%"></div><span class="val">2.7</span></div>
+    <div class="row"><div class="bar c" style="width:21.2%"></div><span class="val">1.1</span></div></div>
+  <div class="dec"><strong>1970s</strong></div><div class="bars">
+    <div class="row"><div class="bar l" style="width:96.2%"></div><span class="val"><strong>5.0</strong></span></div>
+    <div class="row"><div class="bar c" style="width:15.4%"></div><span class="val">0.8</span></div></div>
+  <div class="dec">1980s</div><div class="bars">
+    <div class="row"><div class="bar l" style="width:53.8%"></div><span class="val">2.8</span></div>
+    <div class="row"><div class="bar c" style="width:15.4%"></div><span class="val">0.8</span></div></div>
+  <div class="dec">1990s</div><div class="bars">
+    <div class="row"><div class="bar l" style="width:71.2%"></div><span class="val">3.7</span></div>
+    <div class="row"><div class="bar c" style="width:15.4%"></div><span class="val">0.8</span></div></div>
+  <div class="dec"><strong>2000s</strong></div><div class="bars">
+    <div class="row"><div class="bar l" style="width:25.0%"></div><span class="val">1.3</span></div>
+    <div class="row"><div class="bar c" style="width:30.8%"></div><span class="val"><strong>1.6</strong></span></div></div>
+  <div class="dec">2010s</div><div class="bars">
+    <div class="row"><div class="bar l" style="width:40.4%"></div><span class="val">2.1</span></div>
+    <div class="row"><div class="bar c" style="width:30.8%"></div><span class="val">1.6</span></div></div>
+  <div class="dec">2020s</div><div class="bars">
+    <div class="row"><div class="bar l" style="width:57.7%"></div><span class="val">3.0</span></div>
+    <div class="row"><div class="bar c" style="width:34.6%"></div><span class="val">1.8</span></div></div>
+</div>
+<figcaption>⭐ The <strong>1970s</strong> is the labour peak — which is where the original claim put its hinge, and it picked well. The <strong>2000s</strong> is the only decade where capital outnumbers labour. ⚠️ Decades below 1950 are omitted for small <em>n</em>. <strong>Control:</strong> keyword density is flat across every decade (mean 9.8–12.5 per film) and the 2010s and 2020s are <em>thinner</em> than the 1990s — so neither trend is an artefact of newer films being better catalogued. Without that check the whole chart would be worthless.</figcaption>
+</figure>
+
+<h2><span class="n">3</span>Three controlled pairs</h2>
+<p class="lead">Fix one variable, move the date. This is the argument; everything above is scaffolding.</p>
+
+<div class="panel">
+<h3 style="margin-top:0">Fix the director</h3>
+<p><em>The Molly Maguires</em> (1970) <span class="held">· held</span> &nbsp;/&nbsp; <em>Norma Rae</em> (1979) <span class="want">· wanted</span></p>
+<p style="margin-bottom:0"><strong>Martin Ritt directed both.</strong> The same man made the male industrial labour film and the female one, nine years apart. Verified from the collection's own metadata.</p>
+</div>
+
+<div class="panel">
+<h3 style="margin-top:0">Fix the genre ⭐ <span style="font-weight:normal;color:var(--muted);font-size:.85em">the best of the three</span></h3>
+<p><em>9 to 5</em> (1980) <span class="want">· wanted</span> &nbsp;/&nbsp; <em>Office Space</em> (1999) <span class="want">· wanted</span></p>
+<p>Identical genre — the office comedy about hating your boss — nineteen years apart, and <strong>only the remedy moves</strong>. In 1980 three women organise and win daycare, flexitime and equal pay. In 1999 one man stops showing up and his friends commit fraud.</p>
+<p style="margin-bottom:0">And <em>Office Space</em> ends with Peter leaving the office for <strong>construction work</strong>, happier — phase 1 surviving as nostalgia inside phase 3. It reads as a counterexample and works as a confirmation: the workers are still on screen. What has gone is any belief that something could be done <em>together</em>.</p>
+</div>
+
+<div class="panel">
+<h3 style="margin-top:0">Fix the street</h3>
+<p><em>Working Girl</em> (1988) <span class="want">· wanted</span> &nbsp;/&nbsp; <em>Wall Street: Money Never Sleeps</em> (2010) <span class="want">· wanted</span></p>
+<p style="margin-bottom:0">Same street, same industry, twenty-two years apart. In 1988 the camera is on the secretary riding the ferry in; in 2010 it is on the men she brought coffee to. <strong>Nothing changed but whose job the film thinks is the story.</strong> A better test than <em>Norma Rae</em> against <em>The Big Short</em>, because the setting is held fixed.</p>
+</div>
+
+<p>⭐ <strong>The collection holds half of exactly one pair.</strong> That is the acquisition argument in a single line.</p>
+
+<h2><span class="n">4</span>The remedy recedes</h2>
+<p class="lead">The workplace film never went away. What moved is where it thinks the fix comes from.</p>
+<table>
+<tr><th>Film</th><th>Year</th><th>Subject</th><th>The remedy it believes in</th></tr>
+<tr><td><em>Norma Rae</em></td><td class="yr">1979</td><td>wages, recognition</td><td><strong>a union contract</strong></td></tr>
+<tr><td><em>9 to 5</em></td><td class="yr">1980</td><td>discrimination</td><td>a policy</td></tr>
+<tr><td><em>North Country</em></td><td class="yr">2005</td><td>harassment</td><td><strong>a class action</strong></td></tr>
+<tr><td><em>Confirmation</em></td><td class="yr">2016</td><td>harassment</td><td>a Senate hearing</td></tr>
+<tr><td><em>Bombshell</em></td><td class="yr">2019</td><td>harassment</td><td><strong>a lawsuit</strong></td></tr>
+<tr><td><em>She Said</em></td><td class="yr">2022</td><td>harassment</td><td><strong>a newspaper</strong></td></tr>
+</table>
+<p>⭐ <strong>Each step moves further from the shop floor.</strong> It explains why these feel less like labour films each decade without any of them being about less work.</p>
+
+<h2><span class="n">5</span>What is missing, in the order the argument needs it</h2>
+<ol>
+<li><strong>North Country</strong> (2005) — the first sexual-harassment class action in US law, <strong>set in an iron mine</strong>, the heroine's father on the same shop floor. ⭐ The only film that puts phase 2 physically inside phase 1.</li>
+<li><strong>Office Space</strong> (1999) — the phase-3 keystone, and half of the best pair.</li>
+<li><strong>Norma Rae</strong> (1979) — completes the Ritt pair.</li>
+<li><strong>Working Girl</strong> (1988) and <strong>9 to 5</strong> (1980) — the other pair halves.</li>
+</ol>
+<p class="lead">Thirty-four titles are tracked in all, ranked by what the argument needs rather than by preference, and matched by database id rather than by title.</p>
+
+<h2><span class="n">6</span>How this was measured, and four ways it went wrong</h2>
+<p>Keeping the errors is the point: all four are the same failure, and it is the characteristic failure of asking a catalogue a question.</p>
+<div class="panel flag">
+<ol style="margin:0">
+<li><strong>“No Errol Flynn in the collection.”</strong> The query filtered on an <code>Actors</code> column the export does not have. The reader returns <em>null</em>, the filter matched nothing, and 4,121 rows produced a confident zero. There are <strong>25 Flynn films and 19 Niven</strong>.</li>
+<li><strong>“<em>Mrs. America</em> is not held.”</strong> A movies-only export asked a question about television. It <em>is</em> held — and it is the Equal Rights Amendment film, the exact gap that had just been declared.</li>
+<li><strong>A plot-text pattern over series</strong> returned <em>Rome</em>, <em>Kaamelott</em> and <em>Barbarians</em>, because <em>empire</em> and <em>fortune</em> are period vocabulary. Discarded.</li>
+<li><strong>The keyword buckets could not see phase 3 at all</strong> — see above.</li>
+</ol>
+</div>
+<p>⭐ <strong>Every one returned zero instead of an error, and zero looks like a finding.</strong> A missing column, the wrong table, a false-friend vocabulary and a missing vocabulary are indistinguishable from a true absence at the point of reading the output.</p>
+<p>The three guards now in use: assert the field exists before filtering on it; <strong>name the denominator in the claim</strong> (“0 of 4,121 <em>films</em>” is checkable and exposes that 267 series were never looked at — “not held” is not); and ship a <strong>positive control</strong>, because a tool reporting “0 found” is otherwise indistinguishable from a broken one.</p>
+
+<footer>
+<p>Built from a private film and television collection, 24 October 2026. Counts are of that collection, not of cinema. ⭐ Starred lines are findings; ⚠️ marks a caveat; ⛔ marks something that was wrong.</p>
+<p><a href="index.html">← all film maps</a></p>
+</footer>
+
+</div>
+</body>
+</html>
